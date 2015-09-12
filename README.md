@@ -1,5 +1,5 @@
 # monkey
-Librería Http basada en Volley . "Es como Volley con sabor a retrofit"
+Librería Http basada en Volley . "Es como usar Volley pero con sabor a retrofit"
 
 [Volley](https://developer.android.com/training/volley/index.html)
 
