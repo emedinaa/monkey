@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MonkeyExample</string>
+
+    <string name="hello_world">MonkeyExample</string>
+    <string name="action_settings">MonkeyExample</string>
+    <string name="title_activity_add_speaker">MonkeyExample</string>
+    <string name="title_activity_splash">MonkeyExample</string>
+</resources>
