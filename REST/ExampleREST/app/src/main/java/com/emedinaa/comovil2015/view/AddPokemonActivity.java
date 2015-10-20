@@ -7,9 +7,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.emedinaa.comovil2015.R;
+import com.emedinaa.comovil2015.model.entity.PokemonEntity;
 import com.emedinaa.comovil2015.model.entity.SpeakerEntity;
+import com.emedinaa.comovil2015.presenter.PokemonPresenter;
 import com.emedinaa.comovil2015.presenter.RetrofitPresenter;
 import com.emedinaa.comovil2015.presenter.VolleyPresenter;
 import com.emedinaa.comovil2015.view.core.BaseView;
@@ -17,46 +20,50 @@ import com.emedinaa.comovil2015.view.core.BaseView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class AddSpeakerActivity extends ActionBarActivity implements BaseView {
+public class AddPokemonActivity extends ActionBarActivity implements BaseView {
 
+    @Bind(R.id.iviPokemon)ImageView iviPokemon;
     @Bind(R.id.eTxtName)EditText eTxtName;
-    @Bind(R.id.eTxtLastName)EditText eTxtLastName;
-    @Bind(R.id.eTxtSkill)EditText eTxtSkill;
-    @Bind(R.id.butAddSpeaker)View butAddSpeaker;
+    @Bind(R.id.eTxtType1)EditText eTxtType1;
+    @Bind(R.id.eTxtType2)EditText eTxtType2;
+    @Bind(R.id.butAddPokemon)View butAddPokemon;
     @Bind(R.id.rlayLoading)View rlayLoading;
 
     private VolleyPresenter volleyPresenter;
     private RetrofitPresenter retrofitPresenter;
+    private PokemonPresenter pokemonPresenter;
 
     private String name;
-    private String lastName;
-    private String skill;
+    private String type1;
+    private String type2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_speaker);
+        setContentView(R.layout.activity_add_pokemon);
         ButterKnife.bind(this);
         volleyPresenter= new VolleyPresenter(this,this);
         retrofitPresenter= new RetrofitPresenter(this,this);
+        pokemonPresenter= new PokemonPresenter(this,this);
         events();
     }
 
     private void events() {
 
-        butAddSpeaker.setOnClickListener(new View.OnClickListener() {
+        butAddPokemon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (validate()) {
                     showLoading(true);
+
+                    PokemonEntity pokemonEntity= new PokemonEntity();
+                    pokemonEntity.setName(name);
+                    pokemonEntity.setType1(1);
+                    pokemonEntity.setType2(2);
+
+                    //retrofitPresenter.addSpeaker(speakerEntity);
                     //volleyPresenter.addSpeaker(name,lastName,skill);
-
-                    SpeakerEntity speakerEntity= new SpeakerEntity();
-                    speakerEntity.setName(name);
-                    speakerEntity.setLastname(lastName);
-                    speakerEntity.setSkill(skill);
-
-                    retrofitPresenter.addSpeaker(speakerEntity);
+                    pokemonPresenter.addPokemon(name,1,2);
 
                 }
             }
@@ -65,11 +72,11 @@ public class AddSpeakerActivity extends ActionBarActivity implements BaseView {
 
     private boolean validate() {
         name= eTxtName.getText().toString().trim();
-        lastName= eTxtLastName.getText().toString().trim();
-        skill= eTxtSkill.getText().toString().trim();
+        //lastName= eTxtLastName.getText().toString().trim();
+        //skill= eTxtSkill.getText().toString().trim();
         if(name.isEmpty())return false ;
-        if(lastName.isEmpty())return false ;
-        if(skill.isEmpty())return false;
+        //if(lastName.isEmpty())return false ;
+        //if(skill.isEmpty())return false;
 
         return true;
     }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bluesky">
+    android:background="@color/bluesky"
+    tools:context="com.emedinaa.comovil2015.view.PokemonActivity">
 
     <LinearLayout
         android:orientation="vertical"
@@ -13,79 +13,70 @@
         android:gravity="center_vertical">
 
         <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@drawable/shape_circle"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center"
+            android:id="@+id/iviPokemon"/>
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageView"
-            android:src="@drawable/default_user"
-            android:layout_gravity="center"/>
-
+            android:text="Nombre"/>
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:hint="Name"
             android:textColorHint="@color/gray"
             android:textColor="@color/black"
             android:ems="10"
             android:id="@+id/eTxtName" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Tipo 1"/>
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:textColorHint="@color/gray"
             android:textColor="@color/black"
-            android:hint="Last Name"
             android:ems="10"
-            android:id="@+id/eTxtLastName" />
-
+            android:id="@+id/eTxtType1" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Tipo 2"/>
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="top|left"
             android:lines="3"
-            android:inputType="textMultiLine"
+            android:inputType="textPersonName"
             android:textColorHint="@color/gray"
             android:textColor="@color/black"
-            android:hint="Skill"
             android:ems="10"
-            android:id="@+id/eTxtSkill" />
+            android:id="@+id/eTxtType2" />
 
         <LinearLayout
             android:id="@+id/butAddSpeaker"
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:background="@color/gray"
-            android:padding="5dp">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_add"
-                android:layout_marginRight="20dp"/>
-
+            android:padding="10dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Agregar Speaker"
+                android:text="Actualizar"
                 android:textColor="@color/black"
                 android:textSize="20dp"/>
 
         </LinearLayout>
     </LinearLayout>
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:visibility="gone"
-        android:background="#88FFFFFF"
-        android:id="@+id/rlayLoading"
-        android:clickable="true">
-        <ProgressBar
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
-    </RelativeLayout>
 
-</FrameLayout>
+</RelativeLayout>

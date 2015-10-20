@@ -88,7 +88,7 @@ public class PokemonEntity implements Serializable {
                 '}';
     }
 
-    public class PhotoPokemon
+    public class PhotoPokemon implements Serializable
     {
         private String name;
         private String url;

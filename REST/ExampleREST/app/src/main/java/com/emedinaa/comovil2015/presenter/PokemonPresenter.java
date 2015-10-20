@@ -174,14 +174,14 @@ public class PokemonPresenter {
         queue.add(stringRequest);
 
     }
-    private JSONObject toJSONObject(SpeakerEntity speakerEntity)
+    private JSONObject toJSONObject(PokemonEntity pokemonEntity)
     {
         JSONObject jsonObject = new JSONObject();
         try
         {
-            jsonObject.put("name",speakerEntity.getName());
-            jsonObject.put("lastname",speakerEntity.getLastname());
-            jsonObject.put("skill",speakerEntity.getSkill());
+            jsonObject.put("name",pokemonEntity.getName());
+            jsonObject.put("type1",pokemonEntity.getType1());
+            jsonObject.put("type2",pokemonEntity.getType2());
         }catch (JSONException e)
         {
 
@@ -189,15 +189,15 @@ public class PokemonPresenter {
         return jsonObject;
     }
 
-    public void addSpeaker(String name, String lastName,String skyll)
+    public void addPokemon(String name, int type1,int type2)
     {
         queue = Volley.newRequestQueue(context);
 
-        String url = context.getString(R.string.url_speaker_get);
-        SpeakerEntity request= new SpeakerEntity();
+        String url = context.getString(R.string.url_pokemon_get);
+        PokemonEntity request= new PokemonEntity();
         request.setName(name);
-        request.setLastname(lastName);
-        request.setSkill(skyll);
+        request.setType1(type1);
+        request.setType2(type2);
         JSONObject params= toJSONObject(request);
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
@@ -206,7 +206,7 @@ public class PokemonPresenter {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.v(TAG,"add speaker response "+ response.toString());
+                        Log.v(TAG,"add pokemon response "+ response.toString());
                         view.completeSuccess(response, 100);
 
                     }
@@ -215,7 +215,7 @@ public class PokemonPresenter {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i(TAG, "add speaker Error: " + error.getMessage());
+                Log.i(TAG, "add pokemon Error: " + error.getMessage());
                 // hide the progress dialog
                 view.completeSuccess(error, 100);
 

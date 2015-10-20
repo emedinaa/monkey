@@ -14,12 +14,11 @@ import android.view.View;
 import com.emedinaa.comovil2015.model.entity.PokemonEntity;
 import com.emedinaa.comovil2015.model.entity.SpeakerEntity;
 import com.emedinaa.comovil2015.presenter.PokemonPresenter;
-import com.emedinaa.comovil2015.presenter.RetrofitPresenter;
-import com.emedinaa.comovil2015.presenter.VolleyPresenter;
 import com.emedinaa.comovil2015.utils.DividerItemDecorator;
-import com.emedinaa.comovil2015.view.AddSpeakerActivity;
+import com.emedinaa.comovil2015.utils.RecyclerItemClickListener;
+import com.emedinaa.comovil2015.view.AddPokemonActivity;
+import com.emedinaa.comovil2015.view.PokemonActivity;
 import com.emedinaa.comovil2015.view.adapters.PokemonAdapter;
-import com.emedinaa.comovil2015.view.adapters.SpeakerAdapter;
 import com.emedinaa.comovil2015.view.core.BaseView;
 
 import java.util.List;
@@ -72,24 +71,11 @@ public class MainActivity extends AppCompatActivity implements BaseView {
             @Override
             public void onClick(View view) {
                 showLoading(true);
-                //speakerAdapter.clear();
-                //volleyPresenter.loadSpeakers();
-
-                if(pokemonAdapter!=null)pokemonAdapter.clear();
+                if (pokemonAdapter != null) pokemonAdapter.clear();
                 pokemonPresenter.loadPokemon();
             }
         });
 
-
-        //volleyPresenter.loadSpeakers();
-
-        //agregar expositor
-        //volleyPresenter.addSpeaker("Usuario","Demo","Test");
-        /*SpeakerEntity speakerEntity= new SpeakerEntity();
-        speakerEntity.setName("Usuario 1");
-        speakerEntity.setLastname("Demo 1");
-        speakerEntity.setSkill("Test 1");
-        retrofitPresenter.addSpeaker(speakerEntity);*/
 
     }
 
@@ -102,8 +88,8 @@ public class MainActivity extends AppCompatActivity implements BaseView {
     }
 
     private void gotoAdd() {
-        //Intent intent= new Intent(this, AddSpeakerActivity.class);
-        //startActivity(intent);
+        Intent intent= new Intent(this, AddPokemonActivity.class);
+        startActivity(intent);
     }
 
     private void ui() {
@@ -111,6 +97,27 @@ public class MainActivity extends AppCompatActivity implements BaseView {
         mLayoutManager = new LinearLayoutManager(this);
         rviPokemon.setLayoutManager(mLayoutManager);
         rviPokemon.addItemDecoration(new DividerItemDecorator(this, DividerItemDecorator.VERTICAL_LIST));
+
+        rviPokemon.addOnItemTouchListener(
+                new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position)
+                    {
+                        PokemonEntity pokemonEntity= dataPokemon.get(position);
+                        gotoPokemon(pokemonEntity);
+                    }
+                })
+        );
+    }
+
+    private void gotoPokemon(PokemonEntity pokemonEntity) {
+
+        Bundle bundle= new Bundle();
+        bundle.putSerializable("ENTITY",pokemonEntity);
+
+        Intent intent= new Intent(this, PokemonActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     private void populate(List<PokemonEntity> lsPokemonEntities)
@@ -121,6 +128,8 @@ public class MainActivity extends AppCompatActivity implements BaseView {
         }
         pokemonAdapter= new PokemonAdapter(this, lsPokemonEntities);
         rviPokemon.setAdapter(pokemonAdapter);
+
+
     }
 
     @Override

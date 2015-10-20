@@ -15,15 +15,17 @@
         android:layout_margin="5dp"
         android:id="@+id/header">
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/icon_add"
-        android:layout_marginRight="20dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:padding="10dp"
+        android:src="@drawable/ic_add1"
+        android:layout_marginRight="10dp"
         android:id="@+id/iviAdd"/>
 
     <ImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:padding="10dp"
         android:layout_gravity="center_vertical"
         android:id="@+id/iviRefresh"
         android:src="@drawable/icon_refresh" />
