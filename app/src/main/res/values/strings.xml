@@ -5,4 +5,5 @@
     <string name="action_settings">MonkeyExample</string>
     <string name="title_activity_add_speaker">MonkeyExample</string>
     <string name="title_activity_splash">MonkeyExample</string>
+    <string name="title_activity_main_example">MainExampleActivity</string>
 </resources>

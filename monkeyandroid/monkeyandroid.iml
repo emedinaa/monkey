@@ -94,5 +94,9 @@
     <orderEntry type="library" exported="" name="appcompat-v7-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="support-v4-21.0.3" level="project" />
+    <orderEntry type="library" exported="" name="reflections-0.9.10" level="project" />
+    <orderEntry type="library" exported="" name="javassist-3.18.2-GA" level="project" />
+    <orderEntry type="library" exported="" name="annotations-2.0.1" level="project" />
+    <orderEntry type="library" exported="" name="guava-18.0" level="project" />
   </component>
 </module>
