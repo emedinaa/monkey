@@ -62,7 +62,7 @@
             android:id="@+id/eTxtType2" />
 
         <LinearLayout
-            android:id="@+id/butAddSpeaker"
+            android:id="@+id/butUpdate"
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -78,5 +78,17 @@
 
         </LinearLayout>
     </LinearLayout>
-
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="gone"
+        android:background="#88FFFFFF"
+        android:id="@+id/rlayLoading"
+        android:clickable="true">
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
 </RelativeLayout>

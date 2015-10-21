@@ -262,4 +262,45 @@ public class PokemonPresenter {
         queue.add(jsonObjReq);*/
     }
 
+    public void updatePokemon(PokemonEntity pokemonEntity)
+    {
+        queue = Volley.newRequestQueue(context);
+
+        String url = context.getString(R.string.url_pokemon_get)+"/"+pokemonEntity.getObjectId();
+        JSONObject params= new JSONObject();
+        try {
+            params.put("name","Prueba");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonStringRequest jsonStringRequest= new JsonStringRequest(Request.Method.PUT,
+                url,params,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.v(TAG, "update pokemon response " + response);
+                        view.completeSuccess(response, 100);
+                    }
+                },
+                new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        view.completeError(error, 100);
+
+                    }
+                }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("X-Parse-Application-Id", context.getString(R.string.application_id));
+                params.put("X-Parse-REST-API-Key", context.getString(R.string.rest_api_key));
+
+                return params;
+            }
+        };
+        queue.add(jsonStringRequest);
+    }
+
 }
