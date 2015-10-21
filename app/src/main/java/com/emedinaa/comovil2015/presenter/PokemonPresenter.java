@@ -9,6 +9,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
+import com.android.volley.toolbox.JsonStringRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.emedinaa.comovil2015.R;
@@ -47,7 +49,7 @@ public class PokemonPresenter {
         this.context = context;
     }
 
-    public void load()
+    /*public void load()
     {
         dataPokemon = new ArrayList<PokemonEntity>();
         queue = Volley.newRequestQueue(context);
@@ -90,7 +92,7 @@ public class PokemonPresenter {
         };
         queue.add(jsonObjReq);
 
-    }
+    }}*/
     public void loadPokemon()
     {
         dataPokemon = new ArrayList<PokemonEntity>();
@@ -200,38 +202,64 @@ public class PokemonPresenter {
         request.setType2(type2);
         JSONObject params= toJSONObject(request);
 
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                url, params,
-                new Response.Listener<JSONObject>() {
+        JsonStringRequest jsonStringRequest= new JsonStringRequest(Request.Method.POST,
+                url,params,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.v(TAG, "add pokemon response " + response);
+                        view.completeSuccess(response, 100);
+                    }
+                },
+                new Response.ErrorListener() {
 
                     @Override
-                    public void onResponse(JSONObject response) {
-                        Log.v(TAG,"add pokemon response "+ response.toString());
-                        view.completeSuccess(response, 100);
+                    public void onErrorResponse(VolleyError error) {
+                        view.completeError(error, 100);
 
                     }
-                }, new Response.ErrorListener()
-        {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.i(TAG, "add pokemon Error: " + error.getMessage());
-                // hide the progress dialog
-                view.completeSuccess(error, 100);
-
-            }
-        })
-        {
+                }){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String>  params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<String, String>();
                 params.put("X-Parse-Application-Id", context.getString(R.string.application_id));
                 params.put("X-Parse-REST-API-Key", context.getString(R.string.rest_api_key));
 
                 return params;
             }
         };
-        queue.add(jsonObjReq);
+        queue.add(jsonStringRequest);
+
+        /*JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                url, params,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.v(TAG, "add pokemon response " + response.toString());
+                        view.completeSuccess(response, 100);
+
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i(TAG, "add pokemon Error: " + error.getMessage());
+                // hide the progress dialog
+                view.completeError(error, 100);
+
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("X-Parse-Application-Id", context.getString(R.string.application_id));
+                params.put("X-Parse-REST-API-Key", context.getString(R.string.rest_api_key));
+
+                return params;
+            }
+        };
+        queue.add(jsonObjReq);*/
     }
 
 }
