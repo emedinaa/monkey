@@ -22,10 +22,10 @@ public class ApiClient {
  
      public interface MyApiInterface
      {
-         @GET("/user_rest/login")
+         @MGET("/user_rest/login")
          void login(@Query("email") String email, Callback<Object> callback);
  
-         @POST("/user-rest/register")
+         @MPOST("/user-rest/register")
          void register(@Body Object raw,Callback<Object> callback);
      }
  }

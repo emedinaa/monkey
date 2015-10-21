@@ -47,24 +47,28 @@ public class MainExampleActivity extends AppCompatActivity {
                     MGET myGET = (MGET) annotation;
                     System.out.println("GET value "+myGET.value());
                     Log.v(TAG, "GET value " + myGET.value());
+                    Log.v(TAG, "------------------------------------");
 
                 }else if (annotation instanceof MPOST)
                 {
                     MPOST myPOST = (MPOST) annotation;
                     System.out.println("POST value "+myPOST.value());
                     Log.v(TAG, "POST value " + myPOST.value());
+                    Log.v(TAG, "------------------------------------");
 
                 }else if(annotation instanceof  MHeaders)
                 {
                     MHeaders myHeaders = (MHeaders) annotation;
                     System.out.println("Headers value "+myHeaders.value());
-                    Log.v(TAG, "Headers value " + myHeaders.value());
+                    Log.v(TAG, "Headers value " + myHeaders.value()+" "+myHeaders.value().toString());
+                    Log.v(TAG, "------------------------------------");
 
                 }else if(annotation instanceof MBody)
                 {
                     MBody myBody = (MBody) annotation;
                     System.out.println("Body value "+myBody.toString());
                     Log.v(TAG, "Body value " + myBody.toString());
+                    Log.v(TAG, "------------------------------------");
                 }
             }
         }
