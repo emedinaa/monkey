@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 
 import com.emedinaa.comovil2015.R;
 import com.emedinaa.comovil2015.model.entity.PokemonEntity;
@@ -15,6 +16,7 @@ import com.emedinaa.comovil2015.model.entity.SpeakerEntity;
 import com.emedinaa.comovil2015.presenter.PokemonPresenter;
 import com.emedinaa.comovil2015.presenter.RetrofitPresenter;
 import com.emedinaa.comovil2015.presenter.VolleyPresenter;
+import com.emedinaa.comovil2015.storage.TypePokemonCrud;
 import com.emedinaa.comovil2015.view.core.BaseView;
 
 import butterknife.Bind;
@@ -28,10 +30,13 @@ public class AddPokemonActivity extends ActionBarActivity implements BaseView {
     @Bind(R.id.eTxtType2)EditText eTxtType2;
     @Bind(R.id.butAddPokemon)View butAddPokemon;
     @Bind(R.id.rlayLoading)View rlayLoading;
+    @Bind(R.id.spType1)Spinner spType1;
+    @Bind(R.id.spType2)Spinner spType2;
 
     private VolleyPresenter volleyPresenter;
     private RetrofitPresenter retrofitPresenter;
     private PokemonPresenter pokemonPresenter;
+    private TypePokemonCrud typePokemonCrud;
 
     private String name;
     private String type1;
@@ -45,6 +50,7 @@ public class AddPokemonActivity extends ActionBarActivity implements BaseView {
         volleyPresenter= new VolleyPresenter(this,this);
         retrofitPresenter= new RetrofitPresenter(this,this);
         pokemonPresenter= new PokemonPresenter(this,this);
+        
         events();
     }
 

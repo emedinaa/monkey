@@ -37,29 +37,49 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:text="Tipo 1"/>
-        <EditText
+        <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:textColorHint="@color/gray"
-            android:textColor="@color/black"
-            android:ems="10"
-            android:id="@+id/eTxtType1" />
+            android:layout_height="wrap_content">
+            <Spinner
+                android:id="@+id/spType1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColorHint="@color/gray"
+                android:textColor="@color/black"
+                android:enabled="false"
+                android:ems="10"
+                android:id="@+id/eTxtType1" />
+        </RelativeLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:text="Tipo 2"/>
-        <EditText
+        <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:lines="3"
-            android:inputType="textPersonName"
-            android:textColorHint="@color/gray"
-            android:textColor="@color/black"
-            android:ems="10"
-            android:id="@+id/eTxtType2" />
+            android:layout_height="wrap_content">
+            <Spinner
+                android:id="@+id/spType2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:lines="3"
+                android:inputType="text"
+                android:textColorHint="@color/gray"
+                android:textColor="@color/black"
+                android:enabled="false"
+                android:ems="10"
+                android:id="@+id/eTxtType2" />
+        </RelativeLayout>
+
 
         <LinearLayout
             android:id="@+id/butAddPokemon"
