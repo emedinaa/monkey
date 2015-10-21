@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<string name="application_id">UPM4jj613e1bShpWh0AD5vstZvVSWC19S0lrcz82</string>-->
+    <string name="application_id">TMEEmQ9ORjV2qnVmY5Z4WFSmfRSuzGLBmugTKGdo</string>
+    <!--<string name="rest_api_key">r1hdn8GDfsyurkSh2YFQD8D2WlmoCT1QPM45g3XQ</string>-->
+    <string name="rest_api_key">MZIKBgBRSVtt7EDhsXGtb6T6qofXsAnmimDVRbeW</string>
+
+    <string name="url_speaker_get">https://api.parse.com/1/classes/Speaker</string>
+    <string name="url_pokemon_get">https://api.parse.com/1/classes/Pokemon</string>
+    <string name="url_type_get">https://api.parse.com/1/classes/Type</string>
+</resources>

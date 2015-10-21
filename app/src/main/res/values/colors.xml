@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="brown">#523F30</color>
+    <color name="brown2">#837866</color>
+    <color name="transparent">#00000000</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="bluesky">#82C8C8</color>
+    <color name="bluesky2">#B382C8C8</color> <!--45%  70% — B3-->
+    <color name="gray">#ECEBE7</color>
+
+    <color name="lightblue_background">#EFF6F6</color>
+    <color name="blue_background">#0A2D58</color>
+    <color name="blue_button">#2C6EB3</color>
+    <color name="blue_text">#000045</color>
+    <color name="circle_pageslider">#6C8FAB</color>
+    <color name="drawer_layout">#27384B</color>
+    <color name="header_text">#2B5076</color>
+    <color name="aquamarine">#18B38C</color>
+    <color name="text_normal">#7D8789</color>
+    <color name="child_drawer_layout">#1F2F3F</color>
+    <color name="header_green">#00BE9D</color>
+    <color name="red">#F3014F</color>
+
+    <color name="buttons">#F9F9F9</color>
+    <color name="background_dialog">#F2F2F2</color>
+    <color name="text_blue_like_actionbar">#2A70C2</color>
+    <color name="black_progress">#88FFFFFF</color>
+
+</resources>
