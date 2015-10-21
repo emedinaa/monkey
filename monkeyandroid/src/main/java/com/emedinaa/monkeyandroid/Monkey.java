@@ -1,8 +1,14 @@
 package com.emedinaa.monkeyandroid;
 
 
-import com.emedinaa.monkeyandroid.http.GET;
-import com.emedinaa.monkeyandroid.http.POST;
+
+import android.util.Log;
+
+import com.emedinaa.monkeyandroid.http.MGET;
+import com.emedinaa.monkeyandroid.http.MHeader;
+import com.emedinaa.monkeyandroid.http.MHeaders;
+import com.emedinaa.monkeyandroid.http.MPOST;
+import com.emedinaa.monkeyandroid.http.MPUT;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;
@@ -14,6 +20,7 @@ import java.lang.reflect.Proxy;
  */
 public class Monkey {
 
+    private static final String TAG = "Monkey";
     private String path;
     public Monkey(Builder builder)
     {
@@ -36,14 +43,31 @@ public class Monkey {
             System.out.println("method "+method.getName());
             Annotation[] nAnnotations = method.getDeclaredAnnotations();
             for(Annotation annotation : nAnnotations){
-                if(annotation instanceof GET)
+                if(annotation instanceof MGET)
                 {
-                    GET myGET = (GET) annotation;
-                    System.out.println("monkey value "+myGET.value());
-                }else if (annotation instanceof POST)
+                    MGET myGET = (MGET) annotation;
+                    System.out.println("monkey MGET value "+myGET.value());
+                    Log.v(TAG, "monkey MGET value " + myGET.value());
+
+                }else if (annotation instanceof MPOST)
                 {
-                    POST myPOST = (POST) annotation;
-                    System.out.println("monkey value "+myPOST.value());
+                    MPOST myPOST = (MPOST) annotation;
+                    System.out.println("monkey MPOST value "+myPOST.value());
+                    Log.v(TAG, "monkey MPOST value "+myPOST.value());
+
+                }else if(annotation instanceof MPUT)
+                {
+                    MPUT myPUT = (MPUT) annotation;
+                    System.out.println("monkey MPUT value "+myPUT.value());
+
+                    Log.v(TAG, "monkey MPUT value "+myPUT.value());
+
+                }else if(annotation instanceof MHeaders)
+                {
+                    MHeaders myHeaders = (MHeaders) annotation;
+                    System.out.println("monkey MHeaders value "+myHeaders.value()+" "+myHeaders.value().toString());
+
+                    Log.v(TAG, "monkey MHeaders value "+myHeaders.value()+" "+myHeaders.value().toString());
                 }
             }
         }

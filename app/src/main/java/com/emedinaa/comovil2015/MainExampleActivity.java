@@ -12,10 +12,10 @@ import com.emedinaa.comovil2015.model.response.PokemonResponse;
 import com.emedinaa.comovil2015.request.MonkeyApiClient;
 import com.emedinaa.monkeyandroid.Callback;
 import com.emedinaa.monkeyandroid.Response;
-import com.emedinaa.monkeyandroid.http.Body;
-import com.emedinaa.monkeyandroid.http.GET;
-import com.emedinaa.monkeyandroid.http.POST;
-import com.emedinaa.monkeyandroid.http.Headers;
+import com.emedinaa.monkeyandroid.http.MBody;
+import com.emedinaa.monkeyandroid.http.MGET;
+import com.emedinaa.monkeyandroid.http.MPOST;
+import com.emedinaa.monkeyandroid.http.MHeaders;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -42,27 +42,27 @@ public class MainExampleActivity extends AppCompatActivity {
 
             Annotation[] nAnnotations = method.getDeclaredAnnotations();
             for(Annotation annotation : nAnnotations){
-                if(annotation instanceof GET)
+                if(annotation instanceof MGET)
                 {
-                    GET myGET = (GET) annotation;
+                    MGET myGET = (MGET) annotation;
                     System.out.println("GET value "+myGET.value());
                     Log.v(TAG, "GET value " + myGET.value());
 
-                }else if (annotation instanceof POST)
+                }else if (annotation instanceof MPOST)
                 {
-                    POST myPOST = (POST) annotation;
+                    MPOST myPOST = (MPOST) annotation;
                     System.out.println("POST value "+myPOST.value());
                     Log.v(TAG, "POST value " + myPOST.value());
 
-                }else if(annotation instanceof  Headers)
+                }else if(annotation instanceof  MHeaders)
                 {
-                    Headers myHeaders = (Headers) annotation;
+                    MHeaders myHeaders = (MHeaders) annotation;
                     System.out.println("Headers value "+myHeaders.value());
                     Log.v(TAG, "Headers value " + myHeaders.value());
 
-                }else if(annotation instanceof Body)
+                }else if(annotation instanceof MBody)
                 {
-                    Body myBody = (Body) annotation;
+                    MBody myBody = (MBody) annotation;
                     System.out.println("Body value "+myBody.toString());
                     Log.v(TAG, "Body value " + myBody.toString());
                 }
