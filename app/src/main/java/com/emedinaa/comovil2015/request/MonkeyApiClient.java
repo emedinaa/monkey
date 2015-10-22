@@ -1,5 +1,7 @@
 package com.emedinaa.comovil2015.request;
 
+import android.content.Context;
+
 import com.emedinaa.comovil2015.model.response.PokemonResponse;
 import com.emedinaa.comovil2015.model.response.TypePokemonResponse;
 import com.emedinaa.monkeyandroid.Callback;
@@ -20,10 +22,11 @@ public class MonkeyApiClient {
     private static final String PATH="https://api.parse.com";
     private static PokemonApiInterface pokemonApiInterface;
 
-    public static PokemonApiInterface getPokemonApiClient() {
+    public static PokemonApiInterface getPokemonApiClient(Context context) {
         if (pokemonApiInterface == null) {
             Monkey monkey = new Monkey.Builder()
-                    .setEndpoint("https://api.parse.com/1/classes/Speaker")
+                    .setContext(context)
+                    .setEndpoint(PATH)
                     .build();
             pokemonApiInterface= monkey.create(PokemonApiInterface.class);
         }

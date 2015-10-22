@@ -2,7 +2,6 @@ package com.emedinaa.monkeyandroid;
 
 
 
-import android.content.Context;
 import android.util.Log;
 
 import com.emedinaa.monkeyandroid.http.MGET;
@@ -23,17 +22,15 @@ public class Monkey {
 
     private static final String TAG = "Monkey";
     private String path;
-    private Context context;
     public Monkey(Builder builder)
     {
         this.path= builder.path;
-        this.context= builder.context;
     }
 
     public <T> T create(final Class<T> service)
     {
-        //Annotation[] annotations = service.getAnnotations();
-        //System.out.println("monkey annotations "+annotations);
+        Annotation[] annotations = service.getAnnotations();
+        System.out.println("monkey annotations "+annotations);
         /*for(Annotation annotation : annotations)
         {
             if(annotation instanceof GET) {
@@ -41,7 +38,7 @@ public class Monkey {
                 System.out.println("monkey value "+myAnnotation.value());;
             }
         }*/
-        /*for (Method method : service.getDeclaredMethods())
+        for (Method method : service.getDeclaredMethods())
         {
             System.out.println("method "+method.getName());
             Annotation[] nAnnotations = method.getDeclaredAnnotations();
@@ -56,7 +53,7 @@ public class Monkey {
                 {
                     MPOST myPOST = (MPOST) annotation;
                     System.out.println("monkey MPOST value "+myPOST.value());
-                    Log.v(TAG, "monkey MPOST value " + myPOST.value());
+                    Log.v(TAG, "monkey MPOST value "+myPOST.value());
 
                 }else if(annotation instanceof MPUT)
                 {
@@ -73,7 +70,7 @@ public class Monkey {
                     Log.v(TAG, "monkey MHeaders value "+myHeaders.value()+" "+myHeaders.value().toString());
                 }
             }
-        }*/
+        }
 
         return (T)Proxy.newProxyInstance(service.getClassLoader(), new Class<?>[]{service}, new InvocationHandler() {
             @Override
@@ -82,7 +79,7 @@ public class Monkey {
                 if (method.getDeclaringClass() == Object.class) {
                     return method.invoke(this, args);
                 }
-                return MethodHandler.create(context,method,getPath()).invoke(args);
+                return null;
             }
         });
     }
@@ -98,15 +95,9 @@ public class Monkey {
     public static class Builder
     {
         private String path;
-        private Context context;
         public Builder setEndpoint(String path)
         {
             this.path=path;
-            return this;
-        }
-        public Builder setContext(Context context)
-        {
-            this.context= context;
             return this;
         }
         public Monkey build()

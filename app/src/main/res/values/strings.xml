@@ -6,4 +6,5 @@
     <string name="title_activity_add_speaker">MonkeyExample</string>
     <string name="title_activity_splash">MonkeyExample</string>
     <string name="title_activity_main_example">MainExampleActivity</string>
+    <string name="title_activity_main_example1">MainExample1Activity</string>
 </resources>

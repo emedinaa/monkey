@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.android.volley.VolleyError;
 import com.emedinaa.comovil2015.R;
 import com.emedinaa.comovil2015.model.response.PokemonResponse;
 import com.emedinaa.comovil2015.request.MonkeyApiClient;
@@ -60,7 +61,7 @@ public class MainExampleActivity extends AppCompatActivity {
                 {
                     MHeaders myHeaders = (MHeaders) annotation;
                     System.out.println("Headers value "+myHeaders.value());
-                    Log.v(TAG, "Headers value " + myHeaders.value()+" "+myHeaders.value().toString());
+                    Log.v(TAG, "Headers value " + myHeaders.value() + " " + myHeaders.value().toString());
                     Log.v(TAG, "------------------------------------");
 
                 }else if(annotation instanceof MBody)
@@ -73,14 +74,24 @@ public class MainExampleActivity extends AppCompatActivity {
             }
         }
 
-        MonkeyApiClient.getPokemonApiClient().loadPokemons(new Callback<PokemonResponse>() {
+        MonkeyApiClient.getPokemonApiClient(this).loadPokemons(new Callback<PokemonResponse>() {
             @Override
             public void onResponse(Response<PokemonResponse> response) {
 
             }
 
             @Override
+            public void onResponse(String response) {
+
+            }
+
+            @Override
             public void onFailure(Throwable t) {
+
+            }
+
+            @Override
+            public void onFailure(VolleyError volleyError) {
 
             }
         });

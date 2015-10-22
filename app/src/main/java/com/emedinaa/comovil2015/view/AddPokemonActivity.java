@@ -50,7 +50,7 @@ public class AddPokemonActivity extends ActionBarActivity implements BaseView {
         volleyPresenter= new VolleyPresenter(this,this);
         retrofitPresenter= new RetrofitPresenter(this,this);
         pokemonPresenter= new PokemonPresenter(this,this);
-        
+
         events();
     }
 
