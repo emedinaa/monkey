@@ -26,6 +26,7 @@ public class ApiClient
      {
          @MGET("/user_rest/login")
          void login(@Query("email") String email, Callback<Object> callback);
+         
          @MPOST("/user-rest/register")
          void register(@Body Object raw,Callback<Object> callback);
      }
@@ -35,9 +36,9 @@ public class ApiClient
 
 ## Download
 
-## MAVEN
+## Maven
 
-## GRADLE
+## Gradle
 ```
    repositories {
         maven { url "https://jitpack.io" }
@@ -52,4 +53,4 @@ public class ApiClient
 
 ## References
 
-Volley[https://developer.android.com/training/volley/index.html](https://developer.android.com/training/volley/index.html)
+Volley [https://developer.android.com/training/volley/index.html](https://developer.android.com/training/volley/index.html)
