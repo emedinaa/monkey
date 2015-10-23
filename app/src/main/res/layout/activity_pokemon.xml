@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bluesky"
-    tools:context="com.emedinaa.comovil2015.view.PokemonActivity">
+    tools:context="com.emedinaa.monkeyexample.view.PokemonActivity">
 
     <LinearLayout
         android:orientation="vertical"

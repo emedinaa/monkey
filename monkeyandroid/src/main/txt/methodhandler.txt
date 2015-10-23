@@ -162,18 +162,39 @@ final public class MethodHandler {
         //httpClient.execute();
     }
 
-    public Object invoke(Object... args)
+    Object invoke(Object... args)
     {
+        //this.callback = (Callback<String>) (args[args.length - 1]);
+
+        /*JSONObject object = null;
+        if (this.httpMethod != HttpClient.GET)
+        {
+            if (args.length < 2) {
+                throw new IllegalArgumentException("Debes tener como mínimo 2 parámetros , 1 Objeto y un Callback.");
+            }
+            try {
+                if(args.length==2)
+                {
+                    object = (JSONObject) (args[0]);
+                }else
+                {
+                    object = (JSONObject) (args[1]);
+                }
+
+            } catch (ClassCastException e) {
+            }
+
+            return httpClient.execute(httpMethod, relativeUrl, object, paramsHeaders, callback);
+        }*/
         RelativeUrlParse relativeUrlParse= new RelativeUrlParse(this.relativeUrl,this.headerAnnotationParam,this.httpMethod,args);
-        relativeUrlParse.parse();
         this.callback= relativeUrlParse.getCallback();
         this.bodyJSON= relativeUrlParse.getJsonObject();
         this.relativeUrl= relativeUrlParse.getRelativeUrl();
+        relativeUrlParse.parse();
 
         System.out.println("invoke relativeUrlParse "+relativeUrlParse);
 
-        //return httpClient.execute(httpMethod, relativeUrlParse.getRelativeUrl(), relativeUrlParse.getJsonObject(), paramsHeaders, relativeUrlParse.getCallback());
-        return httpClient.execute(httpMethod, relativeUrl, bodyJSON, paramsHeaders, callback);
+        return httpClient.execute(httpMethod, relativeUrlParse.getRelativeUrl(), relativeUrlParse.getJsonObject(), paramsHeaders, relativeUrlParse.getCallback());
     }
 
 }

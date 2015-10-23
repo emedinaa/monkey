@@ -32,6 +32,7 @@ public class Monkey {
 
     public <T> T create(final Class<T> service)
     {
+        MonkeyUtils.validateInterface(service);
         //Annotation[] annotations = service.getAnnotations();
         //System.out.println("monkey annotations "+annotations);
         /*for(Annotation annotation : annotations)
