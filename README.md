@@ -91,7 +91,7 @@ Usar el tag @MHeaders
    
 ```
 ```
-     compile 'com.github.emedinaa:monkey:v0.01'
+     compile 'com.github.emedinaa:monkey:v0.02b'
 ```
 
 ## Licence
