@@ -9,13 +9,15 @@ Librería Http basada en Volley . "Es como usar Volley pero con sabor a retrofit
 public class ApiClient 
 {
      private static MyApiInterface myApiInterface;
-     public static MyApiInterface getApiInterface()
+     private static final String PATH="https://api.parse.com";
+     
+     public static MyApiInterface getApiInterface(Context context)
      {
          if(myApiInterface==null)
          {
              Monkey monkey = new Monkey.Builder()
-                     .setContext(this)
-                     .setEndpoint("https://api.parse.com/1/classes/Speaker")
+                     .setContext(context)
+                     .setEndpoint(PATH)
                      .build();
              myApiInterface= monkey.create(MyApiInterface.class);
          }
@@ -24,11 +26,17 @@ public class ApiClient
      
      public interface MyApiInterface
      {
-         @MGET("/user_rest/login")
-         void login(@Query("email") String email, Callback<Object> callback);
+         @MGET("/1/classes/Type")
+         void loadTypesPokemon(Callback<String> callback);
+                 
+         @MPOST("/1/classes/Pokemon")
+         void addPokemon(@MBody Object json,Callback<String> callback);
          
-         @MPOST("/user-rest/register")
-         void register(@Body Object raw,Callback<Object> callback);
+         @MPUT("/1/classes/Pokemon/{objectId}")
+         void updatePokemon(@MPath("objectId") String objectId,@MBody Object json,Callback<String> callback);
+                 
+         @MDELETE("/1/classes/Pokemon/{objectId}")
+         void deletePokemon(@MPath("objectId") String objectId,Callback<String> callback);
      }
  }
  
@@ -36,6 +44,9 @@ public class ApiClient
 
 ## Download
 
+    * Monkey versión 0.02Beta
+    * Mediante JitPack.io [https://jitpack.io/#emedinaa/monkey](https://jitpack.io/#emedinaa/monkey)
+    
 ## Maven
 
 ## Gradle
