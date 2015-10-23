@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import com.emedinaa.monkeyexample.R;
 import com.emedinaa.monkeyexample.model.entity.PokemonEntity;
+import com.emedinaa.monkeyexample.presenter.MonkeyPresenter;
 import com.emedinaa.monkeyexample.presenter.PokemonPresenter;
 import com.emedinaa.monkeyexample.storage.TypePokemonCrud;
 import com.emedinaa.monkeyexample.utils.CircleTransform;
@@ -33,6 +34,7 @@ public class PokemonActivity extends Activity implements BaseView {
     private PokemonEntity pokemonEntity;
     private TypePokemonCrud typePokemonCrud;
     private PokemonPresenter presenter;
+    private MonkeyPresenter monkeyPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -45,8 +47,10 @@ public class PokemonActivity extends Activity implements BaseView {
     }
 
     private void init() {
-        presenter= new PokemonPresenter(this,this);
+        //presenter= new PokemonPresenter(this,this);
+        monkeyPresenter= new MonkeyPresenter(this,this);
         typePokemonCrud= new TypePokemonCrud(this);
+
         if(pokemonEntity!=null)
         {
             String name = pokemonEntity.getName();
@@ -61,20 +65,24 @@ public class PokemonActivity extends Activity implements BaseView {
             eTxtType1.setText(mType1);
             eTxtType2.setText(mType2);
 
-            if(!url.isEmpty())
+            if(url!=null)
             {
-                Picasso.with(iviPokemon.getContext())
-                        .load(url)
-                        .transform(new CircleTransform())
-                        .into(iviPokemon);
-            }else
-            {
-                Picasso.with(iviPokemon.getContext())
-                        .load(R.drawable.default_user)
-                        .resize(200, 200)
-                        .transform(new CircleTransform())
-                        .into(iviPokemon);
+                if(!url.isEmpty())
+                {
+                    Picasso.with(iviPokemon.getContext())
+                            .load(url)
+                            .transform(new CircleTransform())
+                            .into(iviPokemon);
+                }else
+                {
+                    Picasso.with(iviPokemon.getContext())
+                            .load(R.drawable.default_user)
+                            .resize(200, 200)
+                            .transform(new CircleTransform())
+                            .into(iviPokemon);
+                }
             }
+
         }
 
         butUpdate.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +90,7 @@ public class PokemonActivity extends Activity implements BaseView {
             public void onClick(View view) {
                 //showLoading(true);
                 //presenter.updatePokemon(pokemonEntity);
+                monkeyPresenter.updatePokemon(pokemonEntity);
             }
         });
 

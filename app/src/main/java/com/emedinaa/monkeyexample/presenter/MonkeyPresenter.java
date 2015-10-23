@@ -11,11 +11,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonStringRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.emedinaa.monkeyandroid.Callback;
 import com.emedinaa.monkeyexample.R;
 import com.emedinaa.monkeyexample.model.entity.PokemonEntity;
 import com.emedinaa.monkeyexample.model.entity.TypeEntity;
 import com.emedinaa.monkeyexample.model.response.PokemonResponse;
 import com.emedinaa.monkeyexample.model.response.TypePokemonResponse;
+import com.emedinaa.monkeyexample.request.MonkeyApiClient;
 import com.emedinaa.monkeyexample.view.core.BaseView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -31,16 +33,16 @@ import java.util.Map;
 /**
  * Created by emedinaa on 21/09/15.
  */
-public class PokemonPresenter {
+public class MonkeyPresenter {
 
     private static final String TAG ="PokemonPresenter";
-    private RequestQueue queue;
     private List<PokemonEntity> dataPokemon;
     private List<TypeEntity> typePokemon;
     private Context context;
     private BaseView view;
+    private RequestQueue queue;
 
-    public PokemonPresenter(BaseView view, Context context) {
+    public MonkeyPresenter(BaseView view, Context context) {
         this.view = view;
         this.context = context;
     }
@@ -49,84 +51,51 @@ public class PokemonPresenter {
     public void loadPokemon()
     {
         dataPokemon = new ArrayList<PokemonEntity>();
-        queue = Volley.newRequestQueue(context);
+        MonkeyApiClient.getPokemonApiClient(this.context).loadPokemons(new Callback<String>() {
 
-        String url = context.getString(R.string.url_pokemon_get);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                url,new Response.Listener<String>()
-        {
             @Override
             public void onResponse(String response) {
-                Log.v(TAG, response);
                 GsonBuilder builder = new GsonBuilder();
                 Gson gson = builder.create();
                 PokemonResponse objects = gson.fromJson(response, PokemonResponse.class);
 
+                Log.v(TAG, "Response : " + objects);
                 dataPokemon = objects.getResults();
-                view.completeSuccess(dataPokemon,100);
+                view.completeSuccess(dataPokemon, 100);
             }
-        },new Response.ErrorListener()
-        {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Log.v(TAG, "Error: " + volleyError.getMessage());
-                view.completeError(dataPokemon,100);
-            }
-        })
-        {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("X-Parse-Application-Id", context.getString(R.string.application_id));
-                params.put("X-Parse-REST-API-Key", context.getString(R.string.rest_api_key));
 
-                return params;
+            @Override
+            public void onFailure(VolleyError volleyError) {
+                Log.v(TAG, "Error: " + volleyError);
+                view.completeError(dataPokemon, 100);
             }
-        };
-
-        queue.add(stringRequest);
+        });
 
     }
 
     public void loadTypesPokemon()
     {
         typePokemon = new ArrayList<TypeEntity>();
-        queue = Volley.newRequestQueue(context);
 
-        String url = context.getString(R.string.url_type_get);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                url,new Response.Listener<String>()
-        {
+        MonkeyApiClient.getPokemonApiClient(this.context).loadTypesPokemon(new Callback<String>() {
+
             @Override
             public void onResponse(String response) {
-                Log.v(TAG, response);
                 GsonBuilder builder = new GsonBuilder();
                 Gson gson = builder.create();
+
                 TypePokemonResponse objects = gson.fromJson(response, TypePokemonResponse.class);
                 Log.v(TAG, objects.toString());
                 typePokemon = objects.getResults();
-                view.completeSuccess(typePokemon,102);
+                view.completeSuccess(typePokemon, 102);
             }
-        },new Response.ErrorListener()
-        {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Log.v(TAG, "Error: " + volleyError.getMessage());
-                view.completeError(dataPokemon,102);
-            }
-        })
-        {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("X-Parse-Application-Id", context.getString(R.string.application_id));
-                params.put("X-Parse-REST-API-Key", context.getString(R.string.rest_api_key));
 
-                return params;
+            @Override
+            public void onFailure(VolleyError volleyError) {
+                Log.v(TAG, "Error: " + volleyError);
+                view.completeError(dataPokemon, 102);
             }
-        };
-
-        queue.add(stringRequest);
+        });
 
     }
     private JSONObject toJSONObject(PokemonEntity pokemonEntity)

@@ -12,6 +12,7 @@ import android.widget.Spinner;
 
 import com.emedinaa.monkeyexample.R;
 import com.emedinaa.monkeyexample.model.entity.PokemonEntity;
+import com.emedinaa.monkeyexample.presenter.MonkeyPresenter;
 import com.emedinaa.monkeyexample.presenter.PokemonPresenter;
 import com.emedinaa.monkeyexample.presenter.RetrofitPresenter;
 import com.emedinaa.monkeyexample.presenter.VolleyPresenter;
@@ -35,6 +36,7 @@ public class AddPokemonActivity extends ActionBarActivity implements BaseView {
     private VolleyPresenter volleyPresenter;
     private RetrofitPresenter retrofitPresenter;
     private PokemonPresenter pokemonPresenter;
+    private MonkeyPresenter monkeyPresenter;
     private TypePokemonCrud typePokemonCrud;
 
     private String name;
@@ -49,12 +51,12 @@ public class AddPokemonActivity extends ActionBarActivity implements BaseView {
         volleyPresenter= new VolleyPresenter(this,this);
         retrofitPresenter= new RetrofitPresenter(this,this);
         pokemonPresenter= new PokemonPresenter(this,this);
+        monkeyPresenter= new MonkeyPresenter(this,this);
 
         events();
     }
 
     private void events() {
-
         butAddPokemon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,8 +70,8 @@ public class AddPokemonActivity extends ActionBarActivity implements BaseView {
 
                     //retrofitPresenter.addSpeaker(speakerEntity);
                     //volleyPresenter.addSpeaker(name,lastName,skill);
-                    pokemonPresenter.addPokemon(name,1,2);
-
+                    //pokemonPresenter.addPokemon(name,1,2);
+                    monkeyPresenter.addPokemon(name,1,2);
                 }
             }
         });

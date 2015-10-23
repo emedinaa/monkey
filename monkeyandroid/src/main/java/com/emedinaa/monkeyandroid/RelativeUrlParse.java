@@ -31,7 +31,7 @@ public class RelativeUrlParse {
         jsonObject = null;
         this.callback = (Callback<String>) (this.args[this.args.length - 1]);
 
-        if (this.httpMethod == HttpClient.POST || this.httpMethod==HttpClient.PUT || this.httpMethod==HttpClient.DELETE)
+        if (this.httpMethod == HttpClient.POST || this.httpMethod==HttpClient.PUT )
         {
             if (args.length < 2) {
                 throw new IllegalArgumentException("Debes tener como mínimo 2 parámetros , 1 Objeto y un Callback.");
@@ -46,6 +46,34 @@ public class RelativeUrlParse {
             } catch (ClassCastException e) {
             }
         }
+
+        if(this.httpMethod==HttpClient.DELETE)
+        {
+            jsonObject=null;
+            if (args.length < 2) {
+                throw new IllegalArgumentException("Debes tener como mínimo 2 parámetros , 1 Objeto y un Callback.");
+            }
+
+            try {
+                if (args.length == 2) {
+                    jsonObject = (JSONObject) (args[0]);
+                } else
+                {
+                    if(args[1] instanceof Callback)
+                    {
+                        jsonObject = null;
+                    }
+                    if (args[1] instanceof JSONObject)
+                    {
+                        jsonObject=(JSONObject)(args[1]);
+                    }
+                }
+
+            } catch (ClassCastException e) {
+            }
+
+        }
+
         if(headerAnnotationParam.isGotPath())
         {
             String originalURL= this.relativeUrl;

@@ -45,7 +45,50 @@ public class PokemonPresenter {
         this.context = context;
     }
 
+    /*public void load()
+    {
+        dataPokemon = new ArrayList<PokemonEntity>();
+        queue = Volley.newRequestQueue(context);
 
+        String url = context.getString(R.string.url_pokemon_get);
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+                url, null,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.v(TAG, response.toString());
+                        GsonBuilder builder = new GsonBuilder();
+                        Gson gson = builder.create();
+                        PokemonResponse objects = gson.fromJson(response.toString(), PokemonResponse.class);
+
+                        dataPokemon = objects.getResults();
+                        view.completeSuccess(dataPokemon,100);
+                    }
+
+
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("Speaker", "Error: " + error.getMessage());
+                // hide the progress dialog
+                view.completeError(dataPokemon,100);
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("X-Parse-Application-Id", context.getString(R.string.application_id));
+                params.put("X-Parse-REST-API-Key", context.getString(R.string.rest_api_key));
+
+                return params;
+            }
+        };
+        queue.add(jsonObjReq);
+
+    }}*/
     public void loadPokemon()
     {
         dataPokemon = new ArrayList<PokemonEntity>();
@@ -183,6 +226,36 @@ public class PokemonPresenter {
         };
         queue.add(jsonStringRequest);
 
+        /*JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                url, params,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.v(TAG, "add pokemon response " + response.toString());
+                        view.completeSuccess(response, 100);
+
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i(TAG, "add pokemon Error: " + error.getMessage());
+                // hide the progress dialog
+                view.completeError(error, 100);
+
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("X-Parse-Application-Id", context.getString(R.string.application_id));
+                params.put("X-Parse-REST-API-Key", context.getString(R.string.rest_api_key));
+
+                return params;
+            }
+        };
+        queue.add(jsonObjReq);*/
     }
 
     public void updatePokemon(PokemonEntity pokemonEntity)

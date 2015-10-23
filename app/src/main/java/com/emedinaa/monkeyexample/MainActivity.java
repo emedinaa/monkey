@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.emedinaa.monkeyexample.model.entity.PokemonEntity;
 import com.emedinaa.monkeyexample.model.entity.SpeakerEntity;
+import com.emedinaa.monkeyexample.presenter.MonkeyPresenter;
 import com.emedinaa.monkeyexample.presenter.PokemonPresenter;
 import com.emedinaa.monkeyexample.utils.DividerItemDecorator;
 import com.emedinaa.monkeyexample.utils.RecyclerItemClickListener;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements BaseView {
 
     private RecyclerView.LayoutManager mLayoutManager;
     private PokemonPresenter pokemonPresenter;
+    private MonkeyPresenter monkeyPresenter;
     private PokemonAdapter pokemonAdapter;
     private List<SpeakerEntity> data;
     private List<PokemonEntity> dataPokemon;
@@ -58,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements BaseView {
     private void init() {
         ui();
         pokemonPresenter= new PokemonPresenter(this,this);
+        monkeyPresenter= new MonkeyPresenter(this,this);
 
         //events
         iviAdd.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +75,8 @@ public class MainActivity extends AppCompatActivity implements BaseView {
             public void onClick(View view) {
                 showLoading(true);
                 if (pokemonAdapter != null) pokemonAdapter.clear();
-                pokemonPresenter.loadPokemon();
+                //pokemonPresenter.loadPokemon();
+                monkeyPresenter.loadPokemon();
             }
         });
 
@@ -84,7 +88,8 @@ public class MainActivity extends AppCompatActivity implements BaseView {
         super.onResume();
         //cargar expositores
         showLoading(true);
-        pokemonPresenter.loadPokemon();
+        //pokemonPresenter.loadPokemon();
+        monkeyPresenter.loadPokemon();
     }
 
     private void gotoAdd() {

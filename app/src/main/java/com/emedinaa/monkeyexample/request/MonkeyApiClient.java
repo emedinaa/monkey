@@ -5,6 +5,7 @@ import android.content.Context;
 import com.emedinaa.monkeyandroid.Callback;
 import com.emedinaa.monkeyandroid.Monkey;
 import com.emedinaa.monkeyandroid.http.MBody;
+import com.emedinaa.monkeyandroid.http.MDELETE;
 import com.emedinaa.monkeyandroid.http.MGET;
 import com.emedinaa.monkeyandroid.http.MHeaders;
 import com.emedinaa.monkeyandroid.http.MPOST;
@@ -51,5 +52,9 @@ public class MonkeyApiClient {
                 "Content-Type: application/json"})
         @MPUT("/1/classes/Pokemon/{objectId}")
         void updatePokemon(@MPath("objectId") String objectId,@MBody Object json,Callback<String> callback);
+
+        @MHeaders({"X-Parse-Application-Id: TMEEmQ9ORjV2qnVmY5Z4WFSmfRSuzGLBmugTKGdo","X-Parse-REST-API-Key: MZIKBgBRSVtt7EDhsXGtb6T6qofXsAnmimDVRbeW"})
+        @MDELETE("/1/classes/Pokemon/{objectId}")
+        void deletePokemon(@MPath("objectId") String objectId,Callback<String> callback);
     }
 }

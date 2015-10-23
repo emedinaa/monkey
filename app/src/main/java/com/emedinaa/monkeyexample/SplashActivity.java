@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.emedinaa.monkeyexample.R;
 import com.emedinaa.monkeyexample.model.entity.TypeEntity;
+import com.emedinaa.monkeyexample.presenter.MonkeyPresenter;
 import com.emedinaa.monkeyexample.presenter.PokemonPresenter;
 import com.emedinaa.monkeyexample.storage.TypePokemonCrud;
 import com.emedinaa.monkeyexample.view.core.BaseView;
@@ -26,6 +27,7 @@ public class SplashActivity extends AppCompatActivity implements BaseView {
     @Bind(R.id.rlayLoading) View rlayLoading;
 
     private PokemonPresenter pokemonPresenter;
+    private MonkeyPresenter monkeyPresenter;
     private List<TypeEntity> lsTypeEntities;
     private TypePokemonCrud typePokemonCrud;
 
@@ -40,8 +42,11 @@ public class SplashActivity extends AppCompatActivity implements BaseView {
 
     private void loadTypes() {
         pokemonPresenter= new PokemonPresenter(this,this);
+        monkeyPresenter= new MonkeyPresenter(this,this);
+
         showLoading(true);
-        pokemonPresenter.loadTypesPokemon();
+        //pokemonPresenter.loadTypesPokemon();
+        monkeyPresenter.loadTypesPokemon();
     }
 
     @Override

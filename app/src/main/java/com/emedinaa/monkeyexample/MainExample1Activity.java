@@ -34,10 +34,30 @@ public class MainExample1Activity extends ActionBarActivity {
         //loadPokemons();
         //addPokemon();
         //updatePokemon();
-        deletePokemon();
+        //deletePokemon();
     }
 
     private void deletePokemon() {
+        PokemonEntity pokemonEntity= new PokemonEntity();
+        //pokemonEntity.setObjectId("VXLwx9dJKi");
+        pokemonEntity.setObjectId("FgaczGUZSA");
+        pokemonEntity.setName("test");
+        pokemonEntity.setType1(2);
+        pokemonEntity.setType2(0);
+
+        String objectId = pokemonEntity.getObjectId();
+
+        MonkeyApiClient.getPokemonApiClient(this).deletePokemon(objectId, new Callback<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.v(TAG, "delete pokemon response " + response);
+            }
+
+            @Override
+            public void onFailure(VolleyError volleyError) {
+                Log.v(TAG, "delete pokemon error " + volleyError);
+            }
+        });
     }
 
     private void updatePokemon()
@@ -72,7 +92,7 @@ public class MainExample1Activity extends ActionBarActivity {
     private void addPokemon() {
 
         PokemonEntity pokemonEntity= new PokemonEntity();
-        pokemonEntity.setName("test 1");
+        pokemonEntity.setName("test 3");
         pokemonEntity.setType1(1);
         pokemonEntity.setType1(2);
 
