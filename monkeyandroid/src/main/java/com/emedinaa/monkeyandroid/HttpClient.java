@@ -71,9 +71,11 @@ public class HttpClient {
         Request<String> request= null;
         if(method==GET)
         {
+            Log.v(TAG, "GET buildStringRequest ");
             request= buildStringRequest(volleyMethod,url,headers,callback);
         }else
         {
+            Log.v(TAG, "POST buildJsonStringRequest ");
             request= buildJsonStringRequest(volleyMethod,url,params,headers,callback);
         }
 

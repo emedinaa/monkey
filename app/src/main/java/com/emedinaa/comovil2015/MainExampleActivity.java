@@ -74,19 +74,10 @@ public class MainExampleActivity extends AppCompatActivity {
             }
         }
 
-        MonkeyApiClient.getPokemonApiClient(this).loadPokemons(new Callback<PokemonResponse>() {
-            @Override
-            public void onResponse(Response<PokemonResponse> response) {
-
-            }
+        MonkeyApiClient.getPokemonApiClient(this).loadPokemons(new Callback<String>() {
 
             @Override
             public void onResponse(String response) {
-
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
 
             }
 

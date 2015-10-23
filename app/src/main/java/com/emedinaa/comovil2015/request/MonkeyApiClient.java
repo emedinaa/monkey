@@ -37,15 +37,15 @@ public class MonkeyApiClient {
 
         @MHeaders({"X-Parse-Application-Id: TMEEmQ9ORjV2qnVmY5Z4WFSmfRSuzGLBmugTKGdo","X-Parse-REST-API-Key: MZIKBgBRSVtt7EDhsXGtb6T6qofXsAnmimDVRbeW"})
         @MGET("/1/classes/Pokemon")
-        void loadPokemons(Callback<PokemonResponse> callback);
+        void loadPokemons(Callback<String> callback);
 
         @MHeaders({"X-Parse-Application-Id: TMEEmQ9ORjV2qnVmY5Z4WFSmfRSuzGLBmugTKGdo","X-Parse-REST-API-Key: MZIKBgBRSVtt7EDhsXGtb6T6qofXsAnmimDVRbeW"})
         @MGET("/1/classes/Type")
-        void loadTypesPokemon(Callback<TypePokemonResponse> callback);
+        void loadTypesPokemon(Callback<String> callback);
 
         @MHeaders({"X-Parse-Application-Id: TMEEmQ9ORjV2qnVmY5Z4WFSmfRSuzGLBmugTKGdo","X-Parse-REST-API-Key: MZIKBgBRSVtt7EDhsXGtb6T6qofXsAnmimDVRbeW",
                 "Content-Type: application/json"})
         @MPOST("/1/classes/Pokemon")
-        void addPokemon(@MBody Object json,Callback<Object> callback);
+        void addPokemon(@MBody Object json,Callback<String> callback);
     }
 }

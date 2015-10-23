@@ -3,11 +3,15 @@ package com.emedinaa.monkeyandroid;
 import android.content.Context;
 import android.util.Log;
 
+import com.emedinaa.monkeyandroid.http.MBody;
 import com.emedinaa.monkeyandroid.http.MDELETE;
 import com.emedinaa.monkeyandroid.http.MGET;
 import com.emedinaa.monkeyandroid.http.MHeaders;
 import com.emedinaa.monkeyandroid.http.MPOST;
 import com.emedinaa.monkeyandroid.http.MPUT;
+import com.emedinaa.monkeyandroid.http.MPath;
+
+import org.json.JSONObject;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -38,6 +42,7 @@ final public class MethodHandler {
         int httpMethod=HttpClient.GET;
         String relativeUrl="";
         String[] paramsHeaders= {};
+        Object bodyParameter=null;
 
         Annotation[] nAnnotations = method.getDeclaredAnnotations();
         boolean primaryAnnotation=false;
@@ -60,6 +65,7 @@ final public class MethodHandler {
                     httpMethod=HttpClient.POST;
                     relativeUrl= myPOST.value();
                     System.out.println("MethodHandler MPOST value " + myPOST.value());
+                    bodyParameter=parseParameters(method);
                     primaryAnnotation=true;
                     continue;
 
@@ -68,6 +74,7 @@ final public class MethodHandler {
                     httpMethod=HttpClient.PUT;
                     relativeUrl= myPUT.value();
                     System.out.println("MethodHandler MPUT value " + myPUT.value());
+                    bodyParameter=parseParameters(method);
                     primaryAnnotation=true;
                     continue;
                 }else if(annotation instanceof MDELETE)
@@ -76,21 +83,46 @@ final public class MethodHandler {
                     httpMethod=HttpClient.DELETE;
                     relativeUrl= myDELETE.value();
                     System.out.println("MethodHandler MDELETE value " + myDELETE.value());
+                    bodyParameter=parseParameters(method);
                     primaryAnnotation=true;
                     continue;
                 }
-            }else
-            {
-                if(annotation instanceof MHeaders)
-                {
-                    MHeaders myHeaders = (MHeaders) annotation;
-                    paramsHeaders=myHeaders.value();
-                    System.out.println("MethodHandler MHeaders value " + myHeaders.value());
-                }
             }
+            if(annotation instanceof MHeaders)
+            {
+                MHeaders myHeaders = (MHeaders) annotation;
+                paramsHeaders=myHeaders.value();
+                System.out.println("MethodHandler MHeaders value " + myHeaders.value());
+            }
+
 
         }
         return  new MethodHandler(context,httpMethod,baseURL,relativeUrl,paramsHeaders);
+    }
+
+    private static Object parseParameters(Method method) {
+
+        Annotation[][] parameterAnnotations = method.getParameterAnnotations();
+        Class[] parameterTypes = method.getParameterTypes();
+
+        int i=0;
+        for(Annotation[] annotations : parameterAnnotations){
+            Class parameterType = parameterTypes[i++];
+
+            for(Annotation annotation : annotations){
+                if(annotation instanceof MBody){
+                    MBody myAnnotation = (MBody) annotation;
+                    System.out.println("Body param: " + parameterType.getName());
+                    System.out.println("Body annotation : " + myAnnotation.toString());
+                }else if(annotation instanceof MPath)
+                {
+                    MPath myAnnotation = (MPath) annotation;
+                    System.out.println("MPath param: " + parameterType.getName());
+                    System.out.println("MPath annotation : " + myAnnotation.toString());
+                }
+            }
+        }
+        return null;
     }
 
     private HttpClient httpClient;
@@ -115,6 +147,15 @@ final public class MethodHandler {
 
     Object invoke(Object... args)
     {
-        return httpClient.execute(httpMethod,relativeUrl,null,paramsHeaders,null);
+        Callback<String> callback =(Callback<String>)(args[args.length-1]);
+        JSONObject object=null;
+        try
+        {
+            object= (JSONObject)(args[0]);
+        }catch (ClassCastException e)
+        {
+        }
+
+        return httpClient.execute(httpMethod,relativeUrl,object,paramsHeaders,callback);
     }
 }
