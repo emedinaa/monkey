@@ -42,10 +42,44 @@ public class ApiClient
  
 ```
 
+
+### Headers 
+
+Usar el tag @MHeaders
+```
+  @MHeaders({"X-Parse-Application-Id: TMEEmQ9ORjV2qnVmY5Z4WFSmfRSuzGLBmugDDDFfs","X-Parse-REST-API-Key: MZIKBgBRSVtt7EDhsXGtb6T6DEWFWFWDWDD"})
+   
+```
+
+### Peticiones GET, POST , PUT , DELETE
+```
+     @MGET("/1/classes/Type")
+     void loadTypesPokemon(Callback<String> callback);
+   
+```
+
+```
+     @MPOST("/1/classes/Pokemon")
+     void addPokemon(@MBody Object json,Callback<String> callback);
+   
+```
+
+```
+     @MPUT("/1/classes/Pokemon/{objectId}")
+     void updatePokemon(@MPath("objectId") String objectId,@MBody Object json,Callback<String> callback);
+   
+```
+
+```
+     @MDELETE("/1/classes/Pokemon/{objectId}")
+     void deletePokemon(@MPath("objectId") String objectId,Callback<String> callback);
+   
+```
+
 ## Download
 
-    * Monkey versión 0.02Beta
-    * Mediante JitPack.io [https://jitpack.io/#emedinaa/monkey](https://jitpack.io/#emedinaa/monkey)
+    Monkey versión 0.02Beta
+    Mediante JitPack.io https://jitpack.io/#emedinaa/monkey
     
 ## Maven
 
