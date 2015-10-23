@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import com.emedinaa.monkeyexample.R;
 import com.emedinaa.monkeyexample.model.entity.PokemonEntity;
+import com.emedinaa.monkeyexample.model.entity.TypeEntity;
 import com.emedinaa.monkeyexample.presenter.MonkeyPresenter;
 import com.emedinaa.monkeyexample.presenter.PokemonPresenter;
 import com.emedinaa.monkeyexample.storage.TypePokemonCrud;
@@ -56,8 +57,11 @@ public class PokemonActivity extends Activity implements BaseView {
             String name = pokemonEntity.getName();
             int type1 = pokemonEntity.getType1();
             int type2 = pokemonEntity.getType2();
-            String mType1= typePokemonCrud.getTypeById(type1).getName();
-            String mType2= typePokemonCrud.getTypeById(type2).getName();
+            TypeEntity typeEntity1=typePokemonCrud.getTypeById(type1);
+            TypeEntity typeEntity2=typePokemonCrud.getTypeById(type2);
+
+            String mType1= (typeEntity1==null)?(""):(typeEntity1.getName());
+            String mType2= (typeEntity2==null)?(""):(typeEntity2.getName());
 
             String url= pokemonEntity.getPhotoPath();
 
@@ -88,7 +92,7 @@ public class PokemonActivity extends Activity implements BaseView {
         butUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //showLoading(true);
+                showLoading(true);
                 //presenter.updatePokemon(pokemonEntity);
                 monkeyPresenter.updatePokemon(pokemonEntity);
             }
@@ -123,6 +127,12 @@ public class PokemonActivity extends Activity implements BaseView {
     public void completeSuccess(Object object, int type) {
         Log.v(TAG, "success " + object + " type " + type);
         showLoading(false);
+
+        gotoMain();
+    }
+
+    private void gotoMain() {
+        finish();
     }
 
     @Override
