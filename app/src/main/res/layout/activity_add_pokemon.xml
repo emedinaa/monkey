@@ -41,10 +41,7 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
-            <Spinner
-                android:id="@+id/spType1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+
             <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -54,6 +51,12 @@
                 android:enabled="false"
                 android:ems="10"
                 android:id="@+id/eTxtType1" />
+
+            <Spinner
+                android:id="@+id/spType1"
+                android:spinnerMode="dialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
         </RelativeLayout>
 
         <TextView
@@ -65,10 +68,7 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
-            <Spinner
-                android:id="@+id/spType2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+
             <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -79,6 +79,12 @@
                 android:enabled="false"
                 android:ems="10"
                 android:id="@+id/eTxtType2" />
+
+            <Spinner
+                android:id="@+id/spType2"
+                android:spinnerMode="dialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
         </RelativeLayout>
 
 

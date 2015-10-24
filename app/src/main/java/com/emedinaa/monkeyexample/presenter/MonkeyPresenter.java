@@ -118,14 +118,14 @@ public class MonkeyPresenter {
         PokemonEntity pokemonEntity= new PokemonEntity();
         pokemonEntity.setName(name);
         pokemonEntity.setType1(type1);
-        pokemonEntity.setType1(type2);
+        pokemonEntity.setType2(type2);
+
+        Log.v(TAG, "addPokemon request "+pokemonEntity.toString());
 
         JSONObject params= toJSONObject(pokemonEntity);
         MonkeyApiClient.getPokemonApiClient(this.context).addPokemon(params, new MCallback<String>() {
             @Override
             public void onResponse(String response) {
-                Log.v(TAG, "add pokemon response " + response);
-
                 Log.v(TAG, "add pokemon response " + response);
                 view.completeSuccess(response, 100);
             }
