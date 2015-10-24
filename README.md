@@ -74,8 +74,8 @@ Usar el tag @MHeaders
 
 ## Download
 * Monkey versión 0.03Beta
-* Mediante JitPack.io https://jitpack.io/#emedinaa/monkey
-* AAR [Download](https://github.com/emedinaa/monkey/arr/monkeyandroid.aar)
+* Mediante JitPack.io [https://jitpack.io/#emedinaa/monkey](https://jitpack.io/#emedinaa/monkey)
+* AAR [Download](https://github.com/emedinaa/monkey/aar/monkeyandroid.aar)
 
 ## Maven
 
