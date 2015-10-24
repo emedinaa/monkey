@@ -78,7 +78,7 @@ Usar el tag @MHeaders
 
 ## Download
 
-    Monkey versión 0.02Beta
+    Monkey versión 0.03Beta
     Mediante JitPack.io https://jitpack.io/#emedinaa/monkey
     
 ## Maven
@@ -91,7 +91,7 @@ Usar el tag @MHeaders
    
 ```
 ```
-     compile 'com.github.emedinaa:monkey:v0.02b'
+     compile 'com.github.emedinaa:monkey:v0.03b'
 ```
 
 ## Licence
