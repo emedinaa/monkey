@@ -46,7 +46,7 @@ public class PokemonPresenter {
     }
 
 
-    public void loadPokemon()
+    public void loadPokemons()
     {
         dataPokemon = new ArrayList<PokemonEntity>();
         queue = Volley.newRequestQueue(context);

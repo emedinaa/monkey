@@ -70,7 +70,7 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
         }else
         {
             Picasso.with(holder.iviPokemon.getContext())
-                    .load(R.drawable.default_user)
+                    .load(R.drawable.default_pokemon)
                     .resize(200, 200)
                     .transform(new CircleTransform())
                     .into(holder.iviPokemon);

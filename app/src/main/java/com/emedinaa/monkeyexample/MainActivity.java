@@ -12,9 +12,9 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.emedinaa.monkeyexample.model.entity.PokemonEntity;
-import com.emedinaa.monkeyexample.model.entity.SpeakerEntity;
 import com.emedinaa.monkeyexample.presenter.MonkeyPresenter;
 import com.emedinaa.monkeyexample.presenter.PokemonPresenter;
+import com.emedinaa.monkeyexample.presenter.RetrofitPresenter;
 import com.emedinaa.monkeyexample.utils.DividerItemDecorator;
 import com.emedinaa.monkeyexample.utils.RecyclerItemClickListener;
 import com.emedinaa.monkeyexample.view.AddPokemonActivity;
@@ -43,11 +43,12 @@ public class MainActivity extends AppCompatActivity implements BaseView {
     View iviRefresh;
 
     private RecyclerView.LayoutManager mLayoutManager;
+    private PokemonAdapter pokemonAdapter;
+    private List<PokemonEntity> dataPokemon;
+
     private PokemonPresenter pokemonPresenter;
     private MonkeyPresenter monkeyPresenter;
-    private PokemonAdapter pokemonAdapter;
-    private List<SpeakerEntity> data;
-    private List<PokemonEntity> dataPokemon;
+    private RetrofitPresenter retrofitPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements BaseView {
         ui();
         pokemonPresenter= new PokemonPresenter(this,this);
         monkeyPresenter= new MonkeyPresenter(this,this);
+        retrofitPresenter= new RetrofitPresenter(this,this);
 
         //events
         iviAdd.setOnClickListener(new View.OnClickListener() {
@@ -75,8 +77,10 @@ public class MainActivity extends AppCompatActivity implements BaseView {
             public void onClick(View view) {
                 showLoading(true);
                 if (pokemonAdapter != null) pokemonAdapter.clear();
-                //pokemonPresenter.loadPokemon();
-                monkeyPresenter.loadPokemon();
+
+                //retrofitPresenter.loadPokemons();
+                //pokemonPresenter.loadPokemons();
+                monkeyPresenter.loadPokemons();
             }
         });
 
@@ -86,10 +90,10 @@ public class MainActivity extends AppCompatActivity implements BaseView {
     @Override
     protected void onResume() {
         super.onResume();
-        //cargar expositores
         showLoading(true);
-        //pokemonPresenter.loadPokemon();
-        monkeyPresenter.loadPokemon();
+        //retrofitPresenter.loadPokemons();
+        //pokemonPresenter.loadPokemons();
+        monkeyPresenter.loadPokemons();
     }
 
     private void gotoAdd() {

@@ -12,7 +12,7 @@ public class RelativeUrlParse {
     private Object[] args;
     private HeaderAnnotationParam headerAnnotationParam;
 
-    private Callback<String> callback;
+    private MCallback<String> MCallback;
     private String relativeUrl;
     private int httpMethod=HttpClient.GET;
     private JSONObject jsonObject;
@@ -29,7 +29,7 @@ public class RelativeUrlParse {
     public void parse()
     {
         jsonObject = null;
-        this.callback = (Callback<String>) (this.args[this.args.length - 1]);
+        this.MCallback = (MCallback<String>) (this.args[this.args.length - 1]);
 
         if (this.httpMethod == HttpClient.POST || this.httpMethod==HttpClient.PUT )
         {
@@ -59,7 +59,7 @@ public class RelativeUrlParse {
                     jsonObject = (JSONObject) (args[0]);
                 } else
                 {
-                    if(args[1] instanceof Callback)
+                    if(args[1] instanceof MCallback)
                     {
                         jsonObject = null;
                     }
@@ -89,11 +89,11 @@ public class RelativeUrlParse {
             }
         }
 
-        System.out.println("relative url parse this.relativeUrl= "+this.relativeUrl+" this.callback= "+this.callback+" jsonObject= "+this.jsonObject);
+        System.out.println("relative url parse this.relativeUrl= "+this.relativeUrl+" this.callback= "+this.MCallback +" jsonObject= "+this.jsonObject);
     }
 
-    public Callback<String> getCallback() {
-        return this.callback;
+    public MCallback<String> getMCallback() {
+        return this.MCallback;
     }
 
 
@@ -119,7 +119,7 @@ public class RelativeUrlParse {
         return "RelativeUrlParse{" +
                 "args=" + Arrays.toString(args) +
                 ", headerAnnotationParam=" + headerAnnotationParam +
-                ", callback=" + callback +
+                ", callback=" + MCallback +
                 ", relativeUrl='" + relativeUrl + '\'' +
                 ", httpMethod=" + httpMethod +
                 ", jsonObject=" + jsonObject +

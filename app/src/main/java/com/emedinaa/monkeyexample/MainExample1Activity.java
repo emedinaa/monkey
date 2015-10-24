@@ -7,11 +7,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.android.volley.VolleyError;
-import com.emedinaa.monkeyexample.R;
 import com.emedinaa.monkeyexample.model.entity.PokemonEntity;
 import com.emedinaa.monkeyexample.model.response.PokemonResponse;
 import com.emedinaa.monkeyexample.request.MonkeyApiClient;
-import com.emedinaa.monkeyandroid.Callback;
+import com.emedinaa.monkeyandroid.MCallback;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -47,7 +46,7 @@ public class MainExample1Activity extends ActionBarActivity {
 
         String objectId = pokemonEntity.getObjectId();
 
-        MonkeyApiClient.getPokemonApiClient(this).deletePokemon(objectId, new Callback<String>() {
+        MonkeyApiClient.getPokemonApiClient(this).deletePokemon(objectId, new MCallback<String>() {
             @Override
             public void onResponse(String response) {
                 Log.v(TAG, "delete pokemon response " + response);
@@ -76,7 +75,7 @@ public class MainExample1Activity extends ActionBarActivity {
             e.printStackTrace();
         }
 
-        MonkeyApiClient.getPokemonApiClient(this).updatePokemon(objectId, params, new Callback<String>() {
+        MonkeyApiClient.getPokemonApiClient(this).updatePokemon(objectId, params, new MCallback<String>() {
             @Override
             public void onResponse(String response) {
                 Log.v(TAG, "update pokemon response " + response);
@@ -97,7 +96,7 @@ public class MainExample1Activity extends ActionBarActivity {
         pokemonEntity.setType1(2);
 
         JSONObject params= toJSONObject(pokemonEntity);
-        MonkeyApiClient.getPokemonApiClient(this).addPokemon(params, new Callback<String>() {
+        MonkeyApiClient.getPokemonApiClient(this).addPokemon(params, new MCallback<String>() {
             @Override
             public void onResponse(String response) {
                 Log.v(TAG, "add pokemon response " + response);
@@ -112,7 +111,7 @@ public class MainExample1Activity extends ActionBarActivity {
 
     private void loadPokemons() {
 
-        MonkeyApiClient.getPokemonApiClient(this).loadPokemons(new Callback<String>() {
+        MonkeyApiClient.getPokemonApiClient(this).loadPokemons(new MCallback<String>() {
 
             @Override
             public void onResponse(String response)

@@ -12,5 +12,4 @@ import java.lang.annotation.Target;
 public @interface MQuery
 {
     String value();
-    boolean encoded() default false;
 }

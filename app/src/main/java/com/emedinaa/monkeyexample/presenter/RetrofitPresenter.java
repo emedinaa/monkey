@@ -3,10 +3,10 @@ package com.emedinaa.monkeyexample.presenter;
 import android.content.Context;
 import android.util.Log;
 
-import com.emedinaa.monkeyexample.model.entity.SpeakerAddResponse;
-import com.emedinaa.monkeyexample.model.entity.SpeakerEntity;
-import com.emedinaa.monkeyexample.model.entity.SpeakerResponse;
-import com.emedinaa.monkeyexample.request.ApiClient;
+import com.emedinaa.monkeyexample.model.entity.PokemonEntity;
+import com.emedinaa.monkeyexample.model.response.PokemonAddResponse;
+import com.emedinaa.monkeyexample.model.response.PokemonResponse;
+import com.emedinaa.monkeyexample.request.MyApiClient;
 import com.emedinaa.monkeyexample.view.core.BaseView;
 
 import org.json.JSONException;
@@ -14,9 +14,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import retrofit.Callback;
+
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.Callback;
 
 /**
  * Created by emedinaa on 21/09/15.
@@ -24,7 +25,7 @@ import retrofit.client.Response;
 public class RetrofitPresenter {
 
     private static final String TAG ="RetrofitPresenter";
-    private List<SpeakerEntity> dataSpeaker;
+    private List<PokemonEntity> pokemonSpeaker;
     private Context context;
     private BaseView view;
 
@@ -32,36 +33,35 @@ public class RetrofitPresenter {
         this.view = view;
         this.context = context;
     }
-    public void loadSpeakers()
+    public void loadPokemons()
     {
-        dataSpeaker= new ArrayList<SpeakerEntity>();
-        ApiClient.getSpeakerApiClient().loadSpeakers(new Callback<SpeakerResponse>() {
+        pokemonSpeaker = new ArrayList<PokemonEntity>();
+        MyApiClient.getPokemonApiClient().loadPokemons(new Callback<PokemonResponse>() {
             @Override
-            public void success(SpeakerResponse speakerResponse, Response response) {
-                Log.v(TAG, "speaker success " + speakerResponse);
-                Log.v(TAG, "response "+response.getHeaders().toString());
+            public void success(PokemonResponse pokemonResponse, Response response) {
+                Log.v(TAG, "speaker success " + pokemonResponse);
+                Log.v(TAG, "response " + response.getHeaders().toString());
 
-                dataSpeaker= speakerResponse.getResults();
-                view.completeSuccess(dataSpeaker, 101);
+                pokemonSpeaker = pokemonResponse.getResults();
+                view.completeSuccess(pokemonSpeaker, 101);
             }
 
             @Override
             public void failure(RetrofitError error) {
                 Log.v(TAG, "speaker error " + error);
-                view.completeError(dataSpeaker,101);
+                view.completeError(pokemonSpeaker, 101);
             }
         });
     }
-    public void addSpeaker(SpeakerEntity speakerEntity)
+    public void addPokemon(PokemonEntity pokemonEntity)
     {
-
-        ApiClient.getSpeakerApiClient().addSpeaker(speakerEntity, new Callback<SpeakerAddResponse>() {
+        MyApiClient.getPokemonApiClient().addPokemon(pokemonEntity, new Callback<PokemonAddResponse>() {
             @Override
-            public void success(SpeakerAddResponse speakerAddResponse, Response response) {
-                Log.v(TAG, "speaker add success " + speakerAddResponse);
+            public void success(PokemonAddResponse pokemonAddResponse, Response response) {
+                Log.v(TAG, "pokemon add success " + pokemonAddResponse);
                 Log.v(TAG, "response " + response.getHeaders().toString());
 
-                view.completeSuccess(speakerAddResponse, 101);
+                view.completeSuccess(pokemonAddResponse, 101);
             }
 
             @Override
@@ -72,17 +72,16 @@ public class RetrofitPresenter {
         });
     }
 
-    private JSONObject toJSONObject(SpeakerEntity speakerEntity)
+    private JSONObject toJSONObject(PokemonEntity pokemonEntity)
     {
         JSONObject jsonObject = new JSONObject();
         try
         {
-            jsonObject.put("name",speakerEntity.getName());
-            jsonObject.put("lastname",speakerEntity.getLastname());
-            jsonObject.put("skill",speakerEntity.getSkill());
+            jsonObject.put("name", pokemonEntity.getName());
+            jsonObject.put("type1", pokemonEntity.getType1());
+            jsonObject.put("type2", pokemonEntity.getType2());
         }catch (JSONException e)
         {
-
         }
         return jsonObject;
     }

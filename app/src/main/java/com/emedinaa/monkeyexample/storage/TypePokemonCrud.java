@@ -40,24 +40,6 @@ public class TypePokemonCrud {
 
         realm.commitTransaction();
     }
-    public void remove(TypeEntity typeEntity)
-    {
-        /*
-         realm.beginTransaction();
-                realm.where(TimeStamp.class).equalTo("timeStamp", timestamp).findAll().clear();
-                realm.commitTransaction();
-         */
-        //realm.beginTransaction();
-        //typeEntity.removeFromRealm();
-        //realm.commitTransaction();
-    }
-
-    /*public void update(TypeEntity typeEntity)
-    {
-        realm.beginTransaction();
-        TypeEntity realmType = realm.copyToRealm(typeEntity);
-        realm.commitTransaction();
-    }*/
 
     public void saveList(List<TypeEntity> typeEntityList)
     {

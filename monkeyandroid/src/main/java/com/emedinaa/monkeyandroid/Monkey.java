@@ -33,48 +33,6 @@ public class Monkey {
     public <T> T create(final Class<T> service)
     {
         MonkeyUtils.validateInterface(service);
-        //Annotation[] annotations = service.getAnnotations();
-        //System.out.println("monkey annotations "+annotations);
-        /*for(Annotation annotation : annotations)
-        {
-            if(annotation instanceof GET) {
-                GET myAnnotation = (GET) annotation;
-                System.out.println("monkey value "+myAnnotation.value());;
-            }
-        }*/
-        /*for (Method method : service.getDeclaredMethods())
-        {
-            System.out.println("method "+method.getName());
-            Annotation[] nAnnotations = method.getDeclaredAnnotations();
-            for(Annotation annotation : nAnnotations){
-                if(annotation instanceof MGET)
-                {
-                    MGET myGET = (MGET) annotation;
-                    System.out.println("monkey MGET value "+myGET.value());
-                    Log.v(TAG, "monkey MGET value " + myGET.value());
-
-                }else if (annotation instanceof MPOST)
-                {
-                    MPOST myPOST = (MPOST) annotation;
-                    System.out.println("monkey MPOST value "+myPOST.value());
-                    Log.v(TAG, "monkey MPOST value " + myPOST.value());
-
-                }else if(annotation instanceof MPUT)
-                {
-                    MPUT myPUT = (MPUT) annotation;
-                    System.out.println("monkey MPUT value "+myPUT.value());
-
-                    Log.v(TAG, "monkey MPUT value "+myPUT.value());
-
-                }else if(annotation instanceof MHeaders)
-                {
-                    MHeaders myHeaders = (MHeaders) annotation;
-                    System.out.println("monkey MHeaders value "+myHeaders.value()+" "+myHeaders.value().toString());
-
-                    Log.v(TAG, "monkey MHeaders value "+myHeaders.value()+" "+myHeaders.value().toString());
-                }
-            }
-        }*/
 
         return (T)Proxy.newProxyInstance(service.getClassLoader(), new Class<?>[]{service}, new InvocationHandler() {
             @Override

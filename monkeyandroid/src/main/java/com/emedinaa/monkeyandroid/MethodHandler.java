@@ -5,6 +5,7 @@ import android.content.Context;
 import com.emedinaa.monkeyandroid.http.MBody;
 import com.emedinaa.monkeyandroid.http.MDELETE;
 import com.emedinaa.monkeyandroid.http.MGET;
+import com.emedinaa.monkeyandroid.http.MHeader;
 import com.emedinaa.monkeyandroid.http.MHeaders;
 import com.emedinaa.monkeyandroid.http.MPOST;
 import com.emedinaa.monkeyandroid.http.MPUT;
@@ -23,20 +24,6 @@ final public class MethodHandler {
 
     public static MethodHandler create(Context context,Method method,String baseURL)
     {
-        /*
-            @MHeaders({"X-Parse-Application-Id: TMEEmQ9ORjV2qnVmY5Z4WFSmfRSuzGLBmugTKGdo","X-Parse-REST-API-Key: MZIKBgBRSVtt7EDhsXGtb6T6qofXsAnmimDVRbeW"})
-            @MGET("/1/classes/Pokemon")
-            void loadPokemons(Callback<PokemonResponse> callback);
-
-            @MHeaders({"X-Parse-Application-Id: TMEEmQ9ORjV2qnVmY5Z4WFSmfRSuzGLBmugTKGdo","X-Parse-REST-API-Key: MZIKBgBRSVtt7EDhsXGtb6T6qofXsAnmimDVRbeW"})
-            @MGET("/1/classes/Type")
-            void loadTypesPokemon(Callback<TypePokemonResponse> callback);
-
-            @MHeaders({"X-Parse-Application-Id: TMEEmQ9ORjV2qnVmY5Z4WFSmfRSuzGLBmugTKGdo","X-Parse-REST-API-Key: MZIKBgBRSVtt7EDhsXGtb6T6qofXsAnmimDVRbeW",
-                "Content-Type: application/json"})
-            @MPOST("/1/classes/Pokemon")
-            void addPokemon(@MBody Object json,Callback<Object> callback);
-         */
         int httpMethod=HttpClient.GET;
         String relativeUrl="";
         String[] paramsHeaders= {};
@@ -93,7 +80,13 @@ final public class MethodHandler {
                 paramsHeaders=myHeaders.value();
                 System.out.println("MethodHandler MHeaders value " + myHeaders.value());
             }
-
+            if(annotation instanceof MHeader)
+            {
+                MHeader myHeader = (MHeader) annotation;
+                String headerValue=myHeader.value();
+                paramsHeaders=new String[]{headerValue};
+                System.out.println("MethodHandler MHeader value " + myHeader.value());
+            }
 
         }
         return  new MethodHandler(context,httpMethod,baseURL,relativeUrl,paramsHeaders,headerAnnotationParam);
@@ -144,7 +137,7 @@ final public class MethodHandler {
     private Context context;
     private String baseURL;
     private String relativeUrl;
-    private Callback<String> callback;
+    private MCallback<String> MCallback;
     private String[] paramsHeaders;
     private JSONObject bodyJSON;
     private int httpMethod=HttpClient.GET;
@@ -159,21 +152,20 @@ final public class MethodHandler {
         this.paramsHeaders= paramsHeaders;
         this.headerAnnotationParam= headerAnnotationParam;
         this.httpClient= new HttpClient(context,baseURL);
-        //httpClient.execute();
     }
 
     public Object invoke(Object... args)
     {
         RelativeUrlParse relativeUrlParse= new RelativeUrlParse(this.relativeUrl,this.headerAnnotationParam,this.httpMethod,args);
         relativeUrlParse.parse();
-        this.callback= relativeUrlParse.getCallback();
+        this.MCallback = relativeUrlParse.getMCallback();
         this.bodyJSON= relativeUrlParse.getJsonObject();
         this.relativeUrl= relativeUrlParse.getRelativeUrl();
 
         System.out.println("invoke relativeUrlParse "+relativeUrlParse);
 
         //return httpClient.execute(httpMethod, relativeUrlParse.getRelativeUrl(), relativeUrlParse.getJsonObject(), paramsHeaders, relativeUrlParse.getCallback());
-        return httpClient.execute(httpMethod, relativeUrl, bodyJSON, paramsHeaders, callback);
+        return httpClient.execute(httpMethod, relativeUrl, bodyJSON, paramsHeaders, MCallback);
     }
 
 }

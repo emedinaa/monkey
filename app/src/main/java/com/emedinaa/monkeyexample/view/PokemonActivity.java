@@ -18,6 +18,9 @@ import com.emedinaa.monkeyexample.utils.CircleTransform;
 import com.emedinaa.monkeyexample.view.core.BaseView;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -34,8 +37,12 @@ public class PokemonActivity extends Activity implements BaseView {
 
     private PokemonEntity pokemonEntity;
     private TypePokemonCrud typePokemonCrud;
-    private PokemonPresenter presenter;
+    private PokemonPresenter pokemonPresenter;
     private MonkeyPresenter monkeyPresenter;
+
+    private int type1;
+    private int type2;
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -62,7 +69,6 @@ public class PokemonActivity extends Activity implements BaseView {
 
             String mType1= (typeEntity1==null)?(""):(typeEntity1.getName());
             String mType2= (typeEntity2==null)?(""):(typeEntity2.getName());
-
             String url= pokemonEntity.getPhotoPath();
 
             eTxtName.setText(name);
@@ -80,24 +86,41 @@ public class PokemonActivity extends Activity implements BaseView {
                 }else
                 {
                     Picasso.with(iviPokemon.getContext())
-                            .load(R.drawable.default_user)
+                            .load(R.drawable.default_pokemon)
                             .resize(200, 200)
                             .transform(new CircleTransform())
                             .into(iviPokemon);
                 }
             }
-
         }
 
         butUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showLoading(true);
-                //presenter.updatePokemon(pokemonEntity);
-                monkeyPresenter.updatePokemon(pokemonEntity);
+                if (validate())
+                {
+
+                    JSONObject params= new JSONObject();
+                    try {
+                        params.put("name",name);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    monkeyPresenter.updatePokemon(pokemonEntity,params);
+                    //pokemonPresenter.updatePokemon(pokemonEntity);
+                }
             }
         });
 
+    }
+
+    private boolean validate() {
+        name= eTxtName.getText().toString();
+        //type1= eTxtType1.getText().toString();
+        //type2= eTxtType2.getText().toString();
+        if(name.isEmpty())return false;
+        return true;
     }
 
     private void extras() {
@@ -108,12 +131,12 @@ public class PokemonActivity extends Activity implements BaseView {
             {
                 pokemonEntity=(PokemonEntity)bundle.getSerializable("ENTITY");
             }
-
         }
     }
 
     @Override
-    public void showLoading(boolean b) {
+    public void showLoading(boolean b)
+    {
         int visibility= (b)?(View.VISIBLE):(View.GONE);
         rlayLoading.setVisibility(visibility);
     }
@@ -127,7 +150,6 @@ public class PokemonActivity extends Activity implements BaseView {
     public void completeSuccess(Object object, int type) {
         Log.v(TAG, "success " + object + " type " + type);
         showLoading(false);
-
         gotoMain();
     }
 

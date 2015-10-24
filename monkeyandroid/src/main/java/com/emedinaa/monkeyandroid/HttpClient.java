@@ -7,16 +7,11 @@ import com.android.volley.*;
 import com.android.volley.toolbox.JsonStringRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Created by emedinaa on 21/10/15.
@@ -40,7 +35,7 @@ public class HttpClient {
         queue = Volley.newRequestQueue(context);
     }
 
-    public Object execute(int method,String relativeUrl,JSONObject params, String[] paramsHeaders,final Callback<String> callback)
+    public Object execute(int method,String relativeUrl,JSONObject params, String[] paramsHeaders,final MCallback<String> MCallback)
     {
         final Map<String, String>  headers= (paramsHeaders!=null)?(buildHeaders(paramsHeaders)):(new HashMap<String, String>());
         String url = baseURL+relativeUrl;
@@ -62,7 +57,7 @@ public class HttpClient {
         }
         Log.v(TAG,"-----------------------------------------------------------------------------");
         Log.v(TAG,"method "+method+" relativeUrl "+relativeUrl+" params "+params+" paramsHeaders "+
-                paramsHeaders+" callback "+callback);
+                paramsHeaders+" callback "+ MCallback);
         Log.v(TAG, "url "+url+" volleyMethod "+volleyMethod);
         Log.v(TAG, "headers "+headers);
         Log.v(TAG,"-----------------------------------------------------------------------------");
@@ -72,11 +67,11 @@ public class HttpClient {
         if(method==GET)
         {
             Log.v(TAG, "GET buildStringRequest ");
-            request= buildStringRequest(volleyMethod,url,headers,callback);
+            request= buildStringRequest(volleyMethod,url,headers, MCallback);
         }else
         {
             Log.v(TAG, "POST buildJsonStringRequest ");
-            request= buildJsonStringRequest(volleyMethod,url,params,headers,callback);
+            request= buildJsonStringRequest(volleyMethod,url,params,headers, MCallback);
         }
 
         if(request!=null)queue.add(request);
@@ -84,21 +79,21 @@ public class HttpClient {
         return queue;
     }
 
-    private Request<String> buildStringRequest(int volleyMethod,String url, final Map<String, String> headers,final Callback<String> callback) {
+    private Request<String> buildStringRequest(int volleyMethod,String url, final Map<String, String> headers,final MCallback<String> MCallback) {
         return new StringRequest(volleyMethod,
                 url,new com.android.volley.Response.Listener<String>()
         {
             @Override
             public void onResponse(String response) {
                 Log.v(TAG,"onResponse: "+ response);
-                if(callback!=null)callback.onResponse(response);
+                if(MCallback !=null) MCallback.onResponse(response);
             }
         },new com.android.volley.Response.ErrorListener()
         {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Log.v(TAG, "Error: " + volleyError);
-                if(callback!=null)callback.onFailure(volleyError);
+                if(MCallback !=null) MCallback.onFailure(volleyError);
             }
         })
         {
@@ -109,21 +104,21 @@ public class HttpClient {
         };
     }
 
-    private Request<String> buildJsonStringRequest(int volleyMethod,String url, JSONObject params,final Map<String, String> headers,final Callback<String> callback) {
+    private Request<String> buildJsonStringRequest(int volleyMethod,String url, JSONObject params,final Map<String, String> headers,final MCallback<String> MCallback) {
         return new JsonStringRequest(volleyMethod,
                 url,params,new com.android.volley.Response.Listener<String>()
         {
             @Override
             public void onResponse(String response) {
                 Log.v(TAG,"onResponse: "+ response);
-                callback.onResponse(response);
+                MCallback.onResponse(response);
             }
         },new com.android.volley.Response.ErrorListener()
         {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Log.v(TAG, "Error: " + volleyError);
-                callback.onFailure(volleyError);
+                MCallback.onFailure(volleyError);
             }
         })
         {

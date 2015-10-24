@@ -9,9 +9,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonStringRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.emedinaa.monkeyandroid.Callback;
+import com.emedinaa.monkeyandroid.MCallback;
 import com.emedinaa.monkeyexample.R;
 import com.emedinaa.monkeyexample.model.entity.PokemonEntity;
 import com.emedinaa.monkeyexample.model.entity.TypeEntity;
@@ -35,7 +34,7 @@ import java.util.Map;
  */
 public class MonkeyPresenter {
 
-    private static final String TAG ="PokemonPresenter";
+    private static final String TAG ="MonkeyPresenter";
     private List<PokemonEntity> dataPokemon;
     private List<TypeEntity> typePokemon;
     private Context context;
@@ -48,10 +47,10 @@ public class MonkeyPresenter {
     }
 
 
-    public void loadPokemon()
+    public void loadPokemons()
     {
         dataPokemon = new ArrayList<PokemonEntity>();
-        MonkeyApiClient.getPokemonApiClient(this.context).loadPokemons(new Callback<String>() {
+        MonkeyApiClient.getPokemonApiClient(this.context).loadPokemons(new MCallback<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -77,7 +76,7 @@ public class MonkeyPresenter {
     {
         typePokemon = new ArrayList<TypeEntity>();
 
-        MonkeyApiClient.getPokemonApiClient(this.context).loadTypesPokemon(new Callback<String>() {
+        MonkeyApiClient.getPokemonApiClient(this.context).loadTypesPokemon(new MCallback<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -115,7 +114,29 @@ public class MonkeyPresenter {
 
     public void addPokemon(String name, int type1,int type2)
     {
-        queue = Volley.newRequestQueue(context);
+
+        PokemonEntity pokemonEntity= new PokemonEntity();
+        pokemonEntity.setName(name);
+        pokemonEntity.setType1(type1);
+        pokemonEntity.setType1(type2);
+
+        JSONObject params= toJSONObject(pokemonEntity);
+        MonkeyApiClient.getPokemonApiClient(this.context).addPokemon(params, new MCallback<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.v(TAG, "add pokemon response " + response);
+
+                Log.v(TAG, "add pokemon response " + response);
+                view.completeSuccess(response, 100);
+            }
+
+            @Override
+            public void onFailure(VolleyError volleyError) {
+                Log.v(TAG, "add pokemon onFailure " + volleyError);
+                view.completeError(volleyError, 100);
+            }
+        });
+        /*queue = Volley.newRequestQueue(context);
 
         String url = context.getString(R.string.url_pokemon_get);
         PokemonEntity request= new PokemonEntity();
@@ -151,20 +172,29 @@ public class MonkeyPresenter {
             }
         };
         queue.add(jsonStringRequest);
-
+        */
     }
 
-    public void updatePokemon(PokemonEntity pokemonEntity)
+    public void updatePokemon(PokemonEntity pokemonEntity, JSONObject params)
     {
-        queue = Volley.newRequestQueue(context);
+        String objectId = pokemonEntity.getObjectId();
+
+        MonkeyApiClient.getPokemonApiClient(this.context).updatePokemon(objectId, params, new MCallback<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.v(TAG, "update pokemon response " + response);
+                view.completeSuccess(response, 100);
+            }
+
+            @Override
+            public void onFailure(VolleyError volleyError) {
+                Log.v(TAG, "update pokemon error " + volleyError);
+                view.completeError(volleyError, 100);
+            }
+        });
+        /*queue = Volley.newRequestQueue(context);
 
         String url = context.getString(R.string.url_pokemon_get)+"/"+pokemonEntity.getObjectId();
-        JSONObject params= new JSONObject();
-        try {
-            params.put("name","Prueba");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
         JsonStringRequest jsonStringRequest= new JsonStringRequest(Request.Method.PUT,
                 url,params,
@@ -192,7 +222,7 @@ public class MonkeyPresenter {
                 return params;
             }
         };
-        queue.add(jsonStringRequest);
+        queue.add(jsonStringRequest);*/
     }
 
 }

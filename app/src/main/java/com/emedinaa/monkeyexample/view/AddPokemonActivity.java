@@ -17,7 +17,9 @@ import com.emedinaa.monkeyexample.presenter.PokemonPresenter;
 import com.emedinaa.monkeyexample.presenter.RetrofitPresenter;
 import com.emedinaa.monkeyexample.presenter.VolleyPresenter;
 import com.emedinaa.monkeyexample.storage.TypePokemonCrud;
+import com.emedinaa.monkeyexample.utils.CircleTransform;
 import com.emedinaa.monkeyexample.view.core.BaseView;
+import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -33,15 +35,15 @@ public class AddPokemonActivity extends ActionBarActivity implements BaseView {
     @Bind(R.id.spType1)Spinner spType1;
     @Bind(R.id.spType2)Spinner spType2;
 
+    private TypePokemonCrud typePokemonCrud;
+    private String name;
+    private String type1;
+    private String type2;
+
     private VolleyPresenter volleyPresenter;
     private RetrofitPresenter retrofitPresenter;
     private PokemonPresenter pokemonPresenter;
     private MonkeyPresenter monkeyPresenter;
-    private TypePokemonCrud typePokemonCrud;
-
-    private String name;
-    private String type1;
-    private String type2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,11 @@ public class AddPokemonActivity extends ActionBarActivity implements BaseView {
         pokemonPresenter= new PokemonPresenter(this,this);
         monkeyPresenter= new MonkeyPresenter(this,this);
 
+        Picasso.with(iviPokemon.getContext())
+                .load(R.drawable.default_pokemon)
+                .resize(200, 200)
+                .transform(new CircleTransform())
+                .into(iviPokemon);
         events();
     }
 
@@ -62,16 +69,17 @@ public class AddPokemonActivity extends ActionBarActivity implements BaseView {
             public void onClick(View view) {
                 if (validate()) {
                     showLoading(true);
-
+                    int type1=1;
+                    int type2=2;
                     PokemonEntity pokemonEntity= new PokemonEntity();
                     pokemonEntity.setName(name);
                     pokemonEntity.setType1(1);
                     pokemonEntity.setType2(2);
 
-                    //retrofitPresenter.addSpeaker(speakerEntity);
-                    //volleyPresenter.addSpeaker(name,lastName,skill);
-                    //pokemonPresenter.addPokemon(name,1,2);
-                    monkeyPresenter.addPokemon(name,1,2);
+                    //retrofitPresenter.addPokemon(pokemonEntity);
+                    //volleyPresenter.addPokemon(name,type1,type2);
+                    //pokemonPresenter.addPokemon(name,type1,type2);
+                    monkeyPresenter.addPokemon(name,type1,type2);
                 }
             }
         });
@@ -79,12 +87,7 @@ public class AddPokemonActivity extends ActionBarActivity implements BaseView {
 
     private boolean validate() {
         name= eTxtName.getText().toString().trim();
-        //lastName= eTxtLastName.getText().toString().trim();
-        //skill= eTxtSkill.getText().toString().trim();
         if(name.isEmpty())return false ;
-        //if(lastName.isEmpty())return false ;
-        //if(skill.isEmpty())return false;
-
         return true;
     }
 
@@ -114,7 +117,6 @@ public class AddPokemonActivity extends ActionBarActivity implements BaseView {
     public void completeSuccess(Object object, int type) {
         showLoading(false);
         finish();
-
     }
 
     @Override

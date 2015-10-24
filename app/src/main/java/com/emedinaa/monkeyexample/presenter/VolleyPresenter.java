@@ -11,8 +11,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.emedinaa.monkeyexample.R;
-import com.emedinaa.monkeyexample.model.entity.SpeakerEntity;
-import com.emedinaa.monkeyexample.model.entity.SpeakerResponse;
+import com.emedinaa.monkeyexample.model.entity.PokemonEntity;
+import com.emedinaa.monkeyexample.model.response.PokemonResponse;
 import com.emedinaa.monkeyexample.view.core.BaseView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -32,7 +32,7 @@ public class VolleyPresenter {
 
     private static final String TAG ="VolleyPresenter";
     private RequestQueue queue;
-    private List<SpeakerEntity> dataSpeaker;
+    private List<PokemonEntity> dataPokemon;
     private Context context;
     private BaseView view;
 
@@ -41,35 +41,33 @@ public class VolleyPresenter {
         this.context = context;
     }
 
-    public void loadSpeakers()
+    public void loadPokemons()
     {
-        dataSpeaker= new ArrayList<SpeakerEntity>();
+        dataPokemon = new ArrayList<PokemonEntity>();
         queue = Volley.newRequestQueue(context);
 
-        String url = context.getString(R.string.url_speaker_get);
+        String url = context.getString(R.string.url_pokemon_get);
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
                 url, null,
                 new Response.Listener<JSONObject>() {
-
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.v(TAG, response.toString());
                         GsonBuilder builder = new GsonBuilder();
                         Gson gson = builder.create();
-                        SpeakerResponse objects = gson.fromJson(response.toString(), SpeakerResponse.class);
+                        PokemonResponse objects = gson.fromJson(response.toString(), PokemonResponse.class);
 
-                        dataSpeaker= objects.getResults();
-                        view.completeSuccess(dataSpeaker,100);
+                        dataPokemon = objects.getResults();
+                        view.completeSuccess(dataPokemon,100);
                     }
-
 
                 }, new Response.ErrorListener() {
 
             @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.i("Speaker", "Error: " + error.getMessage());
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.v(TAG, "Error: " + volleyError);
                 // hide the progress dialog
-                view.completeError(dataSpeaker,100);
+                view.completeError(dataPokemon,100);
             }
         })
         {
@@ -85,14 +83,14 @@ public class VolleyPresenter {
         queue.add(jsonObjReq);
 
     }
-    private JSONObject toJSONObject(SpeakerEntity speakerEntity)
+    private JSONObject toJSONObject(PokemonEntity pokemonEntity)
     {
         JSONObject jsonObject = new JSONObject();
         try
         {
-            jsonObject.put("name",speakerEntity.getName());
-            jsonObject.put("lastname",speakerEntity.getLastname());
-            jsonObject.put("skill",speakerEntity.getSkill());
+            jsonObject.put("name", pokemonEntity.getName());
+            jsonObject.put("type1", pokemonEntity.getType1());
+            jsonObject.put("type2", pokemonEntity.getType2());
         }catch (JSONException e)
         {
 
@@ -100,15 +98,15 @@ public class VolleyPresenter {
         return jsonObject;
     }
 
-    public void addSpeaker(String name, String lastName,String skyll)
+    public void addPokemon(String name, int type1, int type2)
     {
         queue = Volley.newRequestQueue(context);
 
-        String url = context.getString(R.string.url_speaker_get);
-        SpeakerEntity request= new SpeakerEntity();
+        String url = context.getString(R.string.url_pokemon_get);
+        PokemonEntity request= new PokemonEntity();
         request.setName(name);
-        request.setLastname(lastName);
-        request.setSkill(skyll);
+        request.setType1(type1);
+        request.setType2(type2);
         JSONObject params= toJSONObject(request);
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
@@ -117,7 +115,7 @@ public class VolleyPresenter {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.v(TAG,"add speaker response "+ response.toString());
+                        Log.v(TAG,"add Pokemon response "+ response.toString());
                         view.completeSuccess(response, 100);
 
                     }
@@ -126,7 +124,7 @@ public class VolleyPresenter {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i(TAG, "add speaker Error: " + error.getMessage());
+                Log.i(TAG, "add Pokemon Error: " + error.getMessage());
                 // hide the progress dialog
                 view.completeSuccess(error, 100);
 

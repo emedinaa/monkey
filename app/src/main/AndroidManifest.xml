@@ -41,15 +41,6 @@
         <activity android:name=".view.PokemonActivity" >
         </activity>
         <activity
-            android:name=".MainExampleActivity"
-            android:label="@string/app_name" >
-            <!--<intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-        </activity>
-        <activity
             android:name=".MainExample1Activity"
             android:label="@string/app_name" >
             <!--<intent-filter>
