@@ -53,36 +53,30 @@ Usar el tag @MHeaders
 
 ### Peticiones GET, POST , PUT , DELETE
 ```
-     @MGET("/1/classes/Type")
-     void loadTypesPokemon(Callback<String> MCallback);
-   
+ @MGET("/1/classes/Type")
+ void loadTypesPokemon(Callback<String> MCallback);
 ```
 
 ```
-     @MPOST("/1/classes/Pokemon")
-     void addPokemon(@MBody Object json,Callback<String> MCallback);
-   
+ @MPOST("/1/classes/Pokemon")
+ void addPokemon(@MBody Object json,Callback<String> MCallback);
 ```
 
 ```
-     @MPUT("/1/classes/Pokemon/{objectId}")
-     void updatePokemon(@MPath("objectId") String objectId,@MBody Object json,Callback<String> MCallback);
-   
+ @MPUT("/1/classes/Pokemon/{objectId}")
+ void updatePokemon(@MPath("objectId") String objectId,@MBody Object json,Callback<String> MCallback);
 ```
 
 ```
-     @MDELETE("/1/classes/Pokemon/{objectId}")
-     void deletePokemon(@MPath("objectId") String objectId,Callback<String> MCallback);
-   
+ @MDELETE("/1/classes/Pokemon/{objectId}")
+ void deletePokemon(@MPath("objectId") String objectId,Callback<String> MCallback);
 ```
 
 ## Download
+* Monkey versión 0.03Beta
+* Mediante JitPack.io https://jitpack.io/#emedinaa/monkey
+* AAR [Download](https://github.com/emedinaa/monkey/arr/monkeyandroid.aar)
 
-    Monkey versión 0.03Beta
-    Mediante JitPack.io https://jitpack.io/#emedinaa/monkey
-
-    [ARR Download ](https://github.com/emedinaa/monkey/arr/monkeyandroid.aar)
-    
 ## Maven
 
 ## Gradle
