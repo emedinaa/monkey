@@ -73,7 +73,7 @@ Usar el tag @MHeaders
 ```
 
 ## Download
-* Monkey versión 0.03Beta
+* Monkey versión 0.04Beta
 * Mediante JitPack.io [https://jitpack.io/#emedinaa/monkey](https://jitpack.io/#emedinaa/monkey)
 * AAR [Download](https://github.com/emedinaa/monkey/blob/master/aar/monkeyandroid.aar)
 
@@ -87,7 +87,7 @@ Usar el tag @MHeaders
    
 ```
 ```
-     compile 'com.github.emedinaa:monkey:v0.03b'
+     compile 'com.github.emedinaa:monkey:v0.04b'
 ```
 
 ## Licence
