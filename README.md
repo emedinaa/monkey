@@ -94,4 +94,5 @@ Usar el tag @MHeaders
 
 ## References
 
-Volley [https://developer.android.com/training/volley/index.html](https://developer.android.com/training/volley/index.html)
+* Volley [https://developer.android.com/training/volley/index.html](https://developer.android.com/training/volley/index.html)
+* Retrofit [http://square.github.io/retrofit/](http://square.github.io/retrofit/)
